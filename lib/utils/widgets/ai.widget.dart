@@ -5,14 +5,17 @@ import 'package:flutter/material.dart';
 
 class AiMessage extends StatelessWidget {
   final String? text;
+  final bool shouldAnimate;
   const AiMessage({
     Key? key,
     this.text,
+    required this.shouldAnimate,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Container(
+      key: key,
       decoration: const BoxDecoration(
         borderRadius: BorderRadius.all(Radius.circular(24)),
         color: Color(0xfff2f2f2),
@@ -53,11 +56,14 @@ class AiMessage extends StatelessWidget {
                 fontSize: 17,
                 fontWeight: FontWeight.w400,
               ),
-              child: AnimatedTextKit(
-                animatedTexts: [TypewriterAnimatedText(text.toString())],
-                isRepeatingAnimation: false,
-                totalRepeatCount: 0,
-              ),
+              child: shouldAnimate
+                  ? AnimatedTextKit(
+                      key: UniqueKey(),
+                      animatedTexts: [TypewriterAnimatedText(text.toString())],
+                      // isRepeatingAnimation: false,
+                      totalRepeatCount: 1,
+                    )
+                  : Text(text.toString()),
             ),
           ),
         ],

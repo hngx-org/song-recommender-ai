@@ -3,9 +3,8 @@ import 'package:flutter/material.dart';
 
 class Conversation {
   final String title;
-  Conversation({
-    required this.title,
-  });
+  final String chatId;
+  Conversation({required this.title, required this.chatId});
 }
 
 class FooterItems {

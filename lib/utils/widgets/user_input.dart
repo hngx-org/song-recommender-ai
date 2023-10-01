@@ -6,10 +6,12 @@ import 'package:song_recommender_ai/features/chat/viewmodels/chat_ai.viewmodel.d
 class UserInput extends StatelessWidget {
   final TextEditingController chatcontroller;
   final FocusNode chatFocus;
+  final String chatId;
   const UserInput({
     Key? key,
     required this.chatcontroller,
     required this.chatFocus,
+    required this.chatId,
   }) : super(key: key);
 
   @override
@@ -21,12 +23,13 @@ class UserInput extends StatelessWidget {
         child: TextFormField(
           // autofocus: true,
           onFieldSubmitted: (e) {
-            final msg = Message(isSender: true, prompt: e);
+            final msg =
+                Message(isSender: true, prompt: e, shouldAnimate: false);
             if (chatcontroller.text.isEmpty) {
               ScaffoldMessenger.of(context).showSnackBar(
                   const SnackBar(content: Text('Please enter some message.')));
             } else {
-              context.read<ChatModel>().sendPrompt(msg);
+              context.read<ChatModel>().sendPrompt(msg, context, chatId);
               chatFocus.unfocus();
               chatcontroller.clear();
             }

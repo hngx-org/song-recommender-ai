@@ -1,44 +1,52 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:song_recommender_ai/features/chat/services/chats_database.dart';
 import 'package:song_recommender_ai/features/sidebar/models/sidebar.model.dart';
+import 'package:song_recommender_ai/features/sidebar/viewmodels/sidebar.viewmodel.dart';
 import 'package:song_recommender_ai/utils/res/icons.dart';
 
 abstract class ISidebarRepository {
-  Future<List<Conversation>> getSidebarTile();
-  List<FooterItems> getSidebarFooter();
+  Future<List<Conversation>> getSidebarChatTiles(String uid);
+  List<FooterItems> getSidebarFooter(String uid, BuildContext context);
 }
 
 class SidebarRepository extends ISidebarRepository {
+  final FirebaseFirestore _firestore = FirebaseFirestore.instance;
+
   @override
-  Future<List<Conversation>> getSidebarTile() async {
-    return Future.delayed(const Duration(seconds: 2), () {
-      return [
-        Conversation(title: 'Frank Sinatra'),
-        Conversation(title: 'Sorrow'),
-        Conversation(title: 'Summer Songs'),
-        Conversation(title: 'Party'),
-        Conversation(title: 'Fly me to the moon'),
-        Conversation(title: 'Al-Green'),
-        Conversation(title: 'Jazz'),
-      ];
-    });
+  Future<List<Conversation>> getSidebarChatTiles(String uid) async {
+    final querysnapshot =
+        await _firestore.collection('users').doc(uid).collection('chats').get();
+    final chats = querysnapshot.docs.map((chat) {
+      final chatId = chat.id.toString();
+      final chatTitle = chat.data()['title'];
+      return Conversation(title: chatTitle, chatId: chatId);
+    }).toList();
+    return chats;
   }
 
   @override
-  List<FooterItems> getSidebarFooter() {
+  List<FooterItems> getSidebarFooter(String uid, BuildContext context) {
+    ChatsDatabase chatsDatabase = ChatsDatabase(uid: uid);
     return [
       FooterItems(
         title: 'Clear Conversations',
         icon: AppIcons.deleteIcon,
-        onTap: () {},
+        onTap: () async {
+          await chatsDatabase.removeAllChats();
+          if (!context.mounted) return;
+          context.read<ChatProvider>().fetchChats(uid);
+        },
       ),
       FooterItems(
         title: 'Subscribe',
-        icon: Icons.subscriptions,
+        icon: Icons.paid_outlined,
         onTap: () {},
       ),
       FooterItems(
         title: 'FAQ & Updates',
-        icon: AppIcons.faqIcon,
+        icon: Icons.question_answer_outlined,
         onTap: () {},
       ),
       FooterItems(
