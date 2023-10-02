@@ -12,6 +12,8 @@ class AuthSignUP extends StatefulWidget {
 class _AuthSignUPState extends State<AuthSignUP> {
   bool _isPasswordVisible = false;
   final TextEditingController _passwordController = TextEditingController();
+  final TextEditingController _emailController = TextEditingController();
+  final TextEditingController _nameController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -129,7 +131,7 @@ class _AuthSignUPState extends State<AuthSignUP> {
                   //   height: 8.0,
                   // ),
                   TextField(
-                    controller: TextEditingController(),
+                    controller: _nameController,
                     decoration: const InputDecoration(
                       border: UnderlineInputBorder(
                         borderSide: BorderSide(color: Colors.blue),
@@ -150,7 +152,7 @@ class _AuthSignUPState extends State<AuthSignUP> {
                   //   height: 8.0,
                   // ),
                   TextField(
-                    controller: TextEditingController(),
+                    controller: _emailController,
                     decoration: InputDecoration(
                       border: const UnderlineInputBorder(
                         borderSide: BorderSide(color: Colors.blue),
