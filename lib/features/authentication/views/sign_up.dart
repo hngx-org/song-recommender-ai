@@ -286,7 +286,7 @@ class _AuthSignUPState extends State<AuthSignUP> {
                           style: TextStyle(
                             fontSize: 14,
                             fontWeight: FontWeight.w500,
-                            color: Colors.blue,
+                            color: Color(0xff2111ad),
                           ),
                         ),
                       ],

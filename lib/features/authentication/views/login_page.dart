@@ -231,7 +231,7 @@ class _AuthLoginState extends State<AuthLogin> {
                     style: TextStyle(
                       fontSize: 14,
                       fontWeight: FontWeight.w500,
-                      color: Colors.blue,
+                      color: Color(0xff2111ad),
                     ),
                   )),
             ),
@@ -262,7 +262,7 @@ class _AuthLoginState extends State<AuthLogin> {
                           style: TextStyle(
                             fontSize: 14,
                             fontWeight: FontWeight.w500,
-                            color: Colors.blue,
+                            color: Color(0xff2111ad),
                           ),
                         ),
                       ],
