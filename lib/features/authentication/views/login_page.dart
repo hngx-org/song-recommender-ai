@@ -112,27 +112,6 @@ class _AuthLoginState extends State<AuthLogin> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   const Text(
-                    "Your Name",
-                    style: TextStyle(
-                      fontSize: 14,
-                      fontWeight: FontWeight.w600,
-                    ),
-                  ),
-                  // const SizedBox(
-                  //   height: 8.0,
-                  // ),
-                  TextField(
-                    controller: TextEditingController(),
-                    decoration: const InputDecoration(
-                      border: UnderlineInputBorder(
-                        borderSide: BorderSide(color: Colors.blue),
-                      ),
-                    ),
-                  ),
-                  const SizedBox(
-                    height: 16.0,
-                  ),
-                  const Text(
                     "Your Email",
                     style: TextStyle(
                       fontSize: 14,
@@ -157,7 +136,7 @@ class _AuthLoginState extends State<AuthLogin> {
                     height: 16.0,
                   ),
                   const Text(
-                    "Create Password",
+                    "Password",
                     style: TextStyle(
                       fontSize: 14,
                       fontWeight: FontWeight.w600,
@@ -216,18 +195,12 @@ class _AuthLoginState extends State<AuthLogin> {
                   Expanded(
                     child: RichText(
                       text: const TextSpan(
-                        text: 'I agree to Music AI Public ',
+                        text: 'Remember me ',
                         style: TextStyle(
                           fontSize: 14,
                           fontWeight: FontWeight.w500,
                           color: Colors.black,
                         ),
-                        children: [
-                          TextSpan(
-                            text: 'Agreement, Terms and Privacy Policy',
-                            style: TextStyle(color: Color(0xff2111ad)),
-                          ),
-                        ],
                       ),
                     ),
                   ),
@@ -264,7 +237,7 @@ class _AuthLoginState extends State<AuthLogin> {
                       mainAxisSize: MainAxisSize.min,
                       children: [
                         Text(
-                          'Already have an account?',
+                          "Don't have an account?",
                           style: TextStyle(
                             fontSize: 14,
                             fontWeight: FontWeight.w500,
@@ -273,7 +246,7 @@ class _AuthLoginState extends State<AuthLogin> {
                         ),
                         SizedBox(width: 4.0),
                         Text(
-                          'Sign in',
+                          'Sign up',
                           style: TextStyle(
                             fontSize: 14,
                             fontWeight: FontWeight.w500,
