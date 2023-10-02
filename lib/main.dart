@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:song_recommender_ai/features/authentication/views/login_page.dart';
 import 'package:song_recommender_ai/features/authentication/views/sign_up.dart';
-import 'package:provider/provider.dart';
+// import 'package:provider/provider.dart';
 
 
 void main() {
@@ -23,7 +23,7 @@ class MyApp extends StatelessWidget {
         initialRoute: '/',
         // navigatorKey: Utils.mainAppNav,
         routes: {
-          '/signup': (context) => const AuthLogin(),
+          '/signup': (context) => const AuthSignUP(),
           '/login': (context) => const AuthLogin(),
         },
       // home: const MyHomePage(title: 'Flutter Demo Home Page'),
