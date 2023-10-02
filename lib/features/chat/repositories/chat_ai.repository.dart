@@ -1,10 +1,12 @@
 import 'dart:convert';
+
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:http/http.dart' as http;
 import 'package:provider/provider.dart';
+
 import 'package:song_recommender_ai/features/chat/models/message.model.dart';
 import 'package:song_recommender_ai/features/chat/models/user_message.model.dart';
-import 'package:http/http.dart' as http;
 import 'package:song_recommender_ai/features/chat/services/chats_database.dart';
 import 'package:song_recommender_ai/features/chat/viewmodels/chat_ai.viewmodel.dart';
 import 'package:song_recommender_ai/features/chat/viewmodels/messages.viewmodel.dart';
@@ -23,11 +25,11 @@ class OAIRepository extends IOPENAIRepository {
   Future<Map<String, dynamic>> sendMessage(
       Message message, BuildContext context, String chatId) async {
     context.read<ChatModel>().setLoading(true);
+    context.read<ChatModel>().setScroll(true);
     try {
       List<Map<String, String>> messageList = [];
-
       final propmt =
-          '''I want you to act as a DJ. You will create a playlist of 10-20 songs (sometimes 10 and sometimes 20) similar to the following text either it is a song/keyword/lyrics/a short prose.
+          '''I want you to act as a DJ. You will create a playlist of 10 songs similar to the following text either it is a song/keyword/lyrics/a short prose.
            You must add the title, description and songs with artist names to the answer. No song or artist should be
             repeated and do not add any anything apart from playlist, descriptiona and title : "${message.prompt}"''';
 
@@ -65,7 +67,6 @@ class OAIRepository extends IOPENAIRepository {
       request.headers.addAll(headers);
 
       http.StreamedResponse response = await request.send();
-
       if (response.statusCode == 200) {
         final data = await response.stream.bytesToString();
 
@@ -87,15 +88,23 @@ class OAIRepository extends IOPENAIRepository {
         if (!context.mounted) {
           return {};
         }
-        context.read<ChatModel>().setLoading(false);
         context.read<MessageViewModel>().fetchMessages(chatId, '112sss');
-
+        context.read<ChatModel>().setScroll(true);
         return responseData;
       } else {
-        return {'status': false, 'message': 'some error occurred'};
+        final data = await response.stream.bytesToString();
+        final error = jsonDecode(data);
+        return {
+          'status': false,
+          'message':
+              '${response.statusCode} some error occurred ${error.toString()}'
+        };
       }
     } catch (e) {
       return {'status': false, 'message': 'some error occurred $e'};
+    } finally {
+      context.read<ChatModel>().setLoading(false);
+      context.read<ChatModel>().setScroll(true);
     }
   }
 }

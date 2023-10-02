@@ -9,6 +9,14 @@ class ChatModel with ChangeNotifier {
   bool _isLoading = false;
   bool get isLoading => _isLoading;
 
+  bool _isScroll = false;
+  bool get isScroll => _isScroll;
+
+  void setScroll(bool scroll) {
+    _isScroll = scroll;
+    notifyListeners();
+  }
+
   void setLoading(bool loading) {
     _isLoading = loading;
     notifyListeners();
