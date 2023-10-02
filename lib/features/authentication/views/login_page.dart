@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:song_recommender_ai/utils/widgets/auth_button.dart';
+import 'package:hng_authentication/authentication.dart';
+import 'package:hng_authentication/widgets/widget.dart';
+import 'dart:convert';
 
 class AuthLogin extends StatefulWidget {
   const AuthLogin({Key? key}) : super(key: key);
@@ -11,7 +14,15 @@ class AuthLogin extends StatefulWidget {
 
 class _AuthLoginState extends State<AuthLogin> {
   bool _isPasswordVisible = false;
-  final TextEditingController _passwordController = TextEditingController();
+  final TextEditingController passwordController = TextEditingController();
+  final TextEditingController emailController = TextEditingController();
+  late Authentication authRepository;
+
+  @override
+  void initState() {
+    super.initState();
+    authRepository = Authentication(); // Initialize authRepository in initState
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -122,7 +133,7 @@ class _AuthLoginState extends State<AuthLogin> {
                   //   height: 8.0,
                   // ),
                   TextField(
-                    controller: TextEditingController(),
+                    controller: emailController,
                     decoration: InputDecoration(
                       border: const UnderlineInputBorder(
                         borderSide: BorderSide(color: Colors.blue),
@@ -146,7 +157,7 @@ class _AuthLoginState extends State<AuthLogin> {
                     height: 8.0,
                   ),
                   TextField(
-                    controller: _passwordController,
+                    controller: passwordController,
                     obscureText: !_isPasswordVisible,
                     decoration: InputDecoration(
                       border: const UnderlineInputBorder(
@@ -211,7 +222,29 @@ class _AuthLoginState extends State<AuthLogin> {
               height: 16.0,
             ),
             AuthButton(
-                onPressed: () {},
+                onPressed: () async {
+                  final email = emailController.text;
+                  final password = passwordController.text;
+
+                  // Call the signIn method from the Authentication class
+                  try {
+                    final result = await authRepository.signIn(email, password);
+                    if (result != null) {
+                      final data = json.decode(result.body);
+                      showSnackbar(context, Colors.black, 'Login successful');
+                      print('sign in result: >>> $data');
+                      // Handle successful login, e.g., navigate to the home screen
+                    } else {
+                      print('error:   eeeeeee');
+                      showSnackbar(context, Colors.red, 'Login ERROR');
+                    }
+                  } catch (e) {
+                    // Handle exceptions or errors here
+                    print('Error signing in: $e');
+                    showSnackbar(context, Colors.red,
+                        'An error occurred while signing in');
+                  }
+                },
                 child: const Text(
                   'Continue',
                   style: TextStyle(
@@ -243,6 +276,7 @@ class _AuthLoginState extends State<AuthLogin> {
                   child: TextButton(
                     onPressed: () {
                       // Handle button press here
+                      Navigator.pushNamed(context, '/sign-up');
                     },
                     child: const Row(
                       mainAxisAlignment: MainAxisAlignment.center,

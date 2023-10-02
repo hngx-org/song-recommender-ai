@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:song_recommender_ai/utils/widgets/auth_button.dart';
+import 'package:hng_authentication/authentication.dart';
+import 'package:hng_authentication/widgets/widget.dart';
+import 'dart:convert';
 
 class AuthSignUP extends StatefulWidget {
   const AuthSignUP({Key? key}) : super(key: key);
@@ -11,9 +14,17 @@ class AuthSignUP extends StatefulWidget {
 
 class _AuthSignUPState extends State<AuthSignUP> {
   bool _isPasswordVisible = false;
-  final TextEditingController _passwordController = TextEditingController();
-  final TextEditingController _emailController = TextEditingController();
-  final TextEditingController _nameController = TextEditingController();
+  final TextEditingController passwordController = TextEditingController();
+  final TextEditingController emailController = TextEditingController();
+  final TextEditingController nameController = TextEditingController();
+  // final String successRoutePage;
+  late Authentication authRepository;
+
+  @override
+  void initState() {
+    super.initState();
+    authRepository = Authentication(); // Initialize authRepository in initState
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -131,7 +142,7 @@ class _AuthSignUPState extends State<AuthSignUP> {
                   //   height: 8.0,
                   // ),
                   TextField(
-                    controller: _nameController,
+                    controller: nameController,
                     decoration: const InputDecoration(
                       border: UnderlineInputBorder(
                         borderSide: BorderSide(color: Colors.blue),
@@ -152,7 +163,7 @@ class _AuthSignUPState extends State<AuthSignUP> {
                   //   height: 8.0,
                   // ),
                   TextField(
-                    controller: _emailController,
+                    controller: emailController,
                     decoration: InputDecoration(
                       border: const UnderlineInputBorder(
                         borderSide: BorderSide(color: Colors.blue),
@@ -176,7 +187,7 @@ class _AuthSignUPState extends State<AuthSignUP> {
                     height: 8.0,
                   ),
                   TextField(
-                    controller: _passwordController,
+                    controller: passwordController,
                     obscureText: !_isPasswordVisible,
                     decoration: InputDecoration(
                       border: const UnderlineInputBorder(
@@ -247,7 +258,31 @@ class _AuthSignUPState extends State<AuthSignUP> {
               height: 16.0,
             ),
             AuthButton(
-                onPressed: () {},
+                onPressed: () async {
+                  final email = emailController.text;
+                  final password = passwordController.text;
+                  final name = nameController.text;
+
+                  // Call the signUp method from the Authentication class
+                  try {
+                    final result =
+                        await authRepository.signUp(email, name, password);
+                    if (result != null) {
+                      final data = json.decode(result.body);
+                      showSnackbar(context, Colors.black, 'SignUp successful');
+                      print('sign up result: >>> $data');
+                      // Navigator.of(context).pushNamed(widget.successRoutePage);
+                    } else {
+                      print('error:   eeeeeee');
+                      showSnackbar(context, Colors.red, 'SignUp ERROR');
+                    }
+                  } catch (e) {
+                    // Handle exceptions or errors here
+                    print('Error signing up: $e');
+                    showSnackbar(context, Colors.red,
+                        'An error occurred while signing up');
+                  }
+                },
                 child: const Text(
                   'Continue',
                   style: TextStyle(
@@ -267,6 +302,7 @@ class _AuthSignUPState extends State<AuthSignUP> {
                   child: TextButton(
                     onPressed: () {
                       // Handle button press here
+                      Navigator.pushNamed(context, '/login');
                     },
                     child: const Row(
                       mainAxisAlignment: MainAxisAlignment.center,
