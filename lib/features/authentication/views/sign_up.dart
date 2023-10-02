@@ -53,72 +53,34 @@ class _AuthSignUPState extends State<AuthSignUP> {
               ),
             ],
           ),
-          const Stack(
-            children: [
-              Stack(
-                children: [
-                  Stack(
-                    children: [
-                      SizedBox(
-                        width: 18.669641494750977,
-                        height: 17.833019256591797,
+           Stack(
+            children: [     
+              Padding(
+                padding: const EdgeInsets.only(left: 25.0),
+                child: Align(
+                  alignment: Alignment.centerLeft,
+                  child: Row(
+                    children:[
+                     const Text(
+                      "Hello there",
+                      style: TextStyle(
+                        fontSize: 20,
+                        fontWeight: FontWeight.w600,
                       ),
-                      SizedBox(
-                        width: 15.303778648376465,
-                        height: 16.67475128173828,
-                      ),
-                      SizedBox(
-                        width: 7.349545955657959,
-                        height: 11.83403205871582,
-                      ),
-                      SizedBox(
-                        width: 8.17718505859375,
-                        height: 13.189891815185547,
-                      ),
-                      SizedBox(
-                        width: 5.843785762786865,
-                        height: 8.427390098571777,
-                      ),
-                      SizedBox(
-                        width: 8.17718505859375,
-                        height: 13.176136016845703,
-                      ),
-                      SizedBox(
-                        width: 10.432770729064941,
-                        height: 12.299346923828125,
-                      ),
-                      SizedBox(
-                        width: 15.789054870605469,
-                        height: 16.703317642211914,
-                      ),
-                      Stack(
-                        children: [
-                          SizedBox(
-                            width: 11.684926986694336,
-                            height: 16.732606887817383,
-                          ),
-                          SizedBox(
-                            width: 3.9737703800201416,
-                            height: 6.919328689575195,
-                          ),
-                        ],
-                      ),
+                    ),
+                    const SizedBox(width: 8.0,),
+                    SvgPicture.asset(
+                    'assets/images/emoji.svg',
+                    width: 15,
+                    height: 15,
+                  ),
                     ],
                   ),
-                ],
-              ),
-              Text(
-                "Hello there",
-                style: TextStyle(
-                  fontSize: 20,
-                  fontWeight: FontWeight.w600,
+                  
                 ),
               ),
+              
             ],
-          ),
-          const SizedBox(
-            width: 8.17718505859375,
-            height: 13.176136016845703,
           ),
           const Padding(
             padding: EdgeInsets.all(25.0),
@@ -144,18 +106,6 @@ class _AuthSignUPState extends State<AuthSignUP> {
                 ],
               ),
             ),
-          ),
-          const SizedBox(
-            width: 8.17718505859375,
-            height: 13.176136016845703,
-          ),
-          const SizedBox(
-            width: 8.17718505859375,
-            height: 13.176136016845703,
-          ),
-          const SizedBox(
-            width: 8.17718505859375,
-            height: 13.176136016845703,
           ),
           Stack(
             children: [
