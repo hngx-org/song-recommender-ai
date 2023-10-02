@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "133292917837",
+    "project_id": "aisongapp-7dda6",
+    "storage_bucket": "aisongapp-7dda6.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:133292917837:android:3eb30b3a2448898dcb8804",
+        "android_client_info": {
+          "package_name": "org.hng.song_recommender_ai"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyD9TL531DnBmiG6vJ4Zx5e0Vmaxe5tgKtI"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
