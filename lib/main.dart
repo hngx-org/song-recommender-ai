@@ -20,7 +20,7 @@ class MyApp extends StatelessWidget {
         theme: ThemeData(
           useMaterial3: true,
         ),
-        initialRoute: '/',
+        initialRoute: '/signup',
         // navigatorKey: Utils.mainAppNav,
         routes: {
           '/signup': (context) => const AuthSignUP(),

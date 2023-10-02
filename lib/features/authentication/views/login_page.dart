@@ -276,7 +276,7 @@ class _AuthLoginState extends State<AuthLogin> {
                   child: TextButton(
                     onPressed: () {
                       // Handle button press here
-                      Navigator.pushNamed(context, '/sign-up');
+                      Navigator.pushNamed(context, '/signup');
                     },
                     child: const Row(
                       mainAxisAlignment: MainAxisAlignment.center,
