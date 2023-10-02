@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 
 class AuthSignUP extends StatefulWidget {
   const AuthSignUP({Key? key}) : super(key: key);
@@ -13,20 +14,29 @@ class _AuthSignUPState extends State<AuthSignUP> {
     return Scaffold(
       body: Column(
         children: [
-          const Column(
+          Column(
             children: [
-              Text(
-                "􀐿 􀙇 􀛨",
-                style: TextStyle(
-                  fontSize: 15,
-                  fontWeight: FontWeight.w400,
-                ),
+              const SizedBox(
+                width: 18.669641494750977,
+                height: 17.833019256591797,
               ),
-              Text(
-                "9:41",
-                style: TextStyle(
-                  fontSize: 15,
-                  fontWeight: FontWeight.w400,
+              const SizedBox(
+                width: 18.669641494750977,
+                height: 17.833019256591797,
+              ),
+              const SizedBox(
+                width: 18.669641494750977,
+                height: 17.833019256591797,
+              ),
+              Padding(
+                padding: const EdgeInsets.only(left: 25.0),
+                child: Align(
+                  alignment: Alignment.centerLeft,
+                  child: SvgPicture.asset(
+                    'assets/images/Back.svg',
+                    width: 15,
+                    height: 15,
+                  ),
                 ),
               ),
             ],
