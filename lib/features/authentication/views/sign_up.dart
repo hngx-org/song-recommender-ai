@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:song_recommender_ai/utils/widgets/auth_button.dart';
 
 class AuthSignUP extends StatefulWidget {
   const AuthSignUP({Key? key}) : super(key: key);
@@ -198,85 +199,107 @@ class _AuthSignUPState extends State<AuthSignUP> {
                 ],
               ),
             ),
-            const Stack(
-              children: [
-                SizedBox(
-                  width: 378,
-                  height: 0,
-                ),
-                Column(
-                  children: [
-                    SizedBox(
-                      width: 23.833328247070312,
-                      height: 20.583332061767578,
-                    ),
-                  ],
-                ),
-                Stack(
-                  children: [
-                    SizedBox(
-                      width: 7,
-                      height: 7,
-                    ),
-                    SizedBox(
-                      width: 7,
-                      height: 7,
-                    ),
-                    SizedBox(
-                      width: 7,
-                      height: 7,
-                    ),
-                    SizedBox(
-                      width: 7,
-                      height: 7,
-                    ),
-                    SizedBox(
-                      width: 7,
-                      height: 7,
-                    ),
-                    SizedBox(
-                      width: 7,
-                      height: 7,
-                    ),
-                    SizedBox(
-                      width: 7,
-                      height: 7,
-                    ),
-                    SizedBox(
-                      width: 7,
-                      height: 7,
-                    ),
-                    SizedBox(
-                      width: 7,
-                      height: 7,
-                    ),
-                    SizedBox(
-                      width: 7,
-                      height: 7,
-                    ),
-                  ],
-                ),
-              ],
+            const SizedBox(
+              height:35.0,
             ),
-            const Stack(
-              children: [
-                Text(
-                  "Already have an account?",
-                  style: TextStyle(
-                    fontSize: 14,
-                    fontWeight: FontWeight.w500,
+            Padding(
+              padding: const EdgeInsets.only(left: 20.0),
+              child: Row(
+                children: [
+                  Container(
+                    width: 24,
+                    height: 24,
+                    decoration: BoxDecoration(
+                      color: const Color(0xff2111ad),
+                      borderRadius: BorderRadius.circular(4),
+                    ),
+                    child: const Icon(
+                      Icons.check,
+                      color: Colors.white,
+                      size: 16,
+                    ),
                   ),
-                ),
-                Text(
-                  "Sign In",
-                  style: TextStyle(
-                    fontSize: 14,
-                    fontWeight: FontWeight.w500,
+                  const SizedBox(width: 8),
+                  Expanded(
+                    child: RichText(
+                      text: const TextSpan(
+                        text: 'I agree to Music AI Public ',
+                        style: TextStyle(
+                          fontSize: 14,
+                          fontWeight: FontWeight.w500,
+                          color: Colors.black,
+                        ),
+                        children: [
+                          TextSpan(
+                            text: 'Agreement, Terms and Privacy Policy',
+                            style: TextStyle(
+                              color: Color(0xff2111ad)
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
                   ),
+                ],
+              ),
+            ),
+            const SizedBox(
+              height: 16.0,
+            ),
+            AuthButton(
+              onPressed: () {
+
+              },
+              
+              child: const Text(
+                  'Continue',
+                  style: TextStyle(
+                  fontSize: 18,
+                  fontWeight: FontWeight.w500,
+                  color: Colors.white,
                 ),
-              ],
+                )
+              ),
+            const SizedBox(
+              height: 16.0,
             ),
             Stack(
+  children: [
+    // Your other widgets here
+    Align(
+      alignment: Alignment.bottomCenter,
+      child: TextButton(
+        onPressed: () {
+          // Handle button press here
+        },
+        child: const Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            Text(
+              'Already have an account?',
+              style: TextStyle(
+                fontSize: 14,
+                fontWeight: FontWeight.w500,
+                color: Colors.black,
+              ),
+            ),
+            SizedBox(width: 4.0),
+            Text(
+              'Sign in',
+              style: TextStyle(
+                fontSize: 14,
+                fontWeight: FontWeight.w500,
+                color: Colors.blue,
+              ),
+            ),
+          ],
+        ),
+      ),
+    ),
+  ],
+),
+           Stack(
               children: [
                 const SizedBox(
                   width: 117,
