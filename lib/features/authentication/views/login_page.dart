@@ -223,6 +223,18 @@ class _AuthLoginState extends State<AuthLogin> {
             const SizedBox(
               height: 16.0,
             ),
+            Center(
+              child: TextButton(
+                  onPressed: () {},
+                  child: const Text(
+                    'Forgot password?',
+                    style: TextStyle(
+                      fontSize: 14,
+                      fontWeight: FontWeight.w500,
+                      color: Colors.blue,
+                    ),
+                  )),
+            ),
             Stack(
               children: [
                 // Your other widgets here
