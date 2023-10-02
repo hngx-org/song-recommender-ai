@@ -200,7 +200,7 @@ class _AuthSignUPState extends State<AuthSignUP> {
               ),
             ),
             const SizedBox(
-              height:35.0,
+              height: 35.0,
             ),
             Padding(
               padding: const EdgeInsets.only(left: 20.0),
@@ -232,9 +232,7 @@ class _AuthSignUPState extends State<AuthSignUP> {
                         children: [
                           TextSpan(
                             text: 'Agreement, Terms and Privacy Policy',
-                            style: TextStyle(
-                              color: Color(0xff2111ad)
-                            ),
+                            style: TextStyle(color: Color(0xff2111ad)),
                           ),
                         ],
                       ),
@@ -247,208 +245,50 @@ class _AuthSignUPState extends State<AuthSignUP> {
               height: 16.0,
             ),
             AuthButton(
-              onPressed: () {
-
-              },
-              
-              child: const Text(
+                onPressed: () {},
+                child: const Text(
                   'Continue',
                   style: TextStyle(
-                  fontSize: 18,
-                  fontWeight: FontWeight.w500,
-                  color: Colors.white,
-                ),
-                )
-              ),
+                    fontSize: 18,
+                    fontWeight: FontWeight.w500,
+                    color: Colors.white,
+                  ),
+                )),
             const SizedBox(
               height: 16.0,
             ),
             Stack(
-  children: [
-    // Your other widgets here
-    Align(
-      alignment: Alignment.bottomCenter,
-      child: TextButton(
-        onPressed: () {
-          // Handle button press here
-        },
-        child: const Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            Text(
-              'Already have an account?',
-              style: TextStyle(
-                fontSize: 14,
-                fontWeight: FontWeight.w500,
-                color: Colors.black,
-              ),
-            ),
-            SizedBox(width: 4.0),
-            Text(
-              'Sign in',
-              style: TextStyle(
-                fontSize: 14,
-                fontWeight: FontWeight.w500,
-                color: Colors.blue,
-              ),
-            ),
-          ],
-        ),
-      ),
-    ),
-  ],
-),
-           Stack(
               children: [
-                const SizedBox(
-                  width: 117,
-                  height: 0,
-                ),
-                const SizedBox(
-                  width: 117,
-                  height: 0,
-                ),
-                const Text(
-                  "or continue with",
-                  style: TextStyle(
-                    fontSize: 16,
-                    fontWeight: FontWeight.w500,
-                  ),
-                ),
-                Stack(
-                  children: [
-                    Container(
-                      width: 110,
-                      height: 55,
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(17),
-                      ),
-                    ),
-                    const Column(
+                // Your other widgets here
+                Align(
+                  alignment: Alignment.bottomCenter,
+                  child: TextButton(
+                    onPressed: () {
+                      // Handle button press here
+                    },
+                    child: const Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      mainAxisSize: MainAxisSize.min,
                       children: [
-                        Stack(
-                          children: [
-                            SizedBox(
-                              width: 26,
-                              height: 30,
-                            ),
-                          ],
+                        Text(
+                          'Already have an account?',
+                          style: TextStyle(
+                            fontSize: 14,
+                            fontWeight: FontWeight.w500,
+                            color: Colors.black,
+                          ),
+                        ),
+                        SizedBox(width: 4.0),
+                        Text(
+                          'Sign in',
+                          style: TextStyle(
+                            fontSize: 14,
+                            fontWeight: FontWeight.w500,
+                            color: Colors.blue,
+                          ),
                         ),
                       ],
                     ),
-                  ],
-                ),
-                Stack(
-                  children: [
-                    Container(
-                      width: 110,
-                      height: 55,
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(17),
-                      ),
-                    ),
-                    const Column(
-                      children: [
-                        Stack(
-                          children: [
-                            Stack(
-                              children: [
-                                SizedBox(
-                                  width: 30,
-                                  height: 29.817768096923828,
-                                ),
-                                SizedBox(
-                                  width: 12.832032203674316,
-                                  height: 24.140625,
-                                ),
-                              ],
-                            ),
-                          ],
-                        ),
-                      ],
-                    ),
-                  ],
-                ),
-                Stack(
-                  children: [
-                    Container(
-                      width: 110,
-                      height: 55,
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(17),
-                      ),
-                    ),
-                    const Column(
-                      children: [
-                        SizedBox(
-                          width: 13.20000171661377,
-                          height: 12.91874885559082,
-                        ),
-                        SizedBox(
-                          width: 21.387493133544922,
-                          height: 11.13749885559082,
-                        ),
-                        SizedBox(
-                          width: 6.056249141693115,
-                          height: 12.350000381469727,
-                        ),
-                        SizedBox(
-                          width: 21.487504959106445,
-                          height: 11.13749885559082,
-                        ),
-                        SizedBox(
-                          width: 27.4999942779541,
-                          height: 27.4999942779541,
-                        ),
-                      ],
-                    ),
-                  ],
-                ),
-              ],
-            ),
-            Stack(
-              children: [
-                Container(
-                  width: 20,
-                  height: 20,
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(3),
-                    color: const Color(0xff2111ad),
-                  ),
-                ),
-                const Column(
-                  children: [
-                    SizedBox(
-                      width: 5.958334445953369,
-                      height: 7.041665077209473,
-                    ),
-                  ],
-                ),
-                const Text(
-                  "I agree to Chatbot_AI  Public Agreement, Terms, & Privacy Policy.",
-                  style: TextStyle(
-                    fontSize: 14,
-                    fontWeight: FontWeight.w500,
-                  ),
-                ),
-              ],
-            ),
-            Stack(
-              children: [
-                Container(
-                  width: 378,
-                  height: 60,
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(17),
-                    color: const Color(0xff2111ad),
-                  ),
-                ),
-                const Text(
-                  "Continue",
-                  style: TextStyle(
-                    fontSize: 24,
-                    fontWeight: FontWeight.w700,
                   ),
                 ),
               ],
