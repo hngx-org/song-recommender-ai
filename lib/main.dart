@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:song_recommender_ai/features/authentication/views/login_page.dart';
 import 'package:song_recommender_ai/features/authentication/views/sign_up.dart';
 
 void main() {
@@ -33,7 +34,8 @@ class MyApp extends StatelessWidget {
         useMaterial3: true,
       ),
       // home: const MyHomePage(title: 'Flutter Demo Home Page'),
-      home: const AuthSignUP(),
+      // home: const AuthSignUP(),
+      home: const AuthLogin(),
     );
   }
 }

@@ -68,7 +68,7 @@ class _AuthLoginState extends State<AuthLogin> {
                     child: Row(
                       children: [
                         const Text(
-                          "Hello there",
+                          "Welcome back",
                           style: TextStyle(
                             fontSize: 20,
                             fontWeight: FontWeight.w600,
@@ -96,14 +96,7 @@ class _AuthLoginState extends State<AuthLogin> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      "Please enter you email & password to create an",
-                      style: TextStyle(
-                        fontSize: 14,
-                        fontWeight: FontWeight.w400,
-                      ),
-                    ),
-                    Text(
-                      "account ",
+                      "Please enter you email & password to sign in",
                       style: TextStyle(
                         fontSize: 14,
                         fontWeight: FontWeight.w400,
