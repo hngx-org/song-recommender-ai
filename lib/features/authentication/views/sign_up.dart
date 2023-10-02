@@ -9,6 +9,9 @@ class AuthSignUP extends StatefulWidget {
 }
 
 class _AuthSignUPState extends State<AuthSignUP> {
+  bool _isPasswordVisible = false;
+  final TextEditingController _passwordController = TextEditingController();
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -115,20 +118,44 @@ class _AuthSignUPState extends State<AuthSignUP> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   const Text(
+                    "Your Name",
+                    style: TextStyle(
+                      fontSize: 14,
+                      fontWeight: FontWeight.w600,
+                    ),
+                  ),
+                  // const SizedBox(
+                  //   height: 8.0,
+                  // ),
+                  TextField(
+                    controller: TextEditingController(),
+                    decoration: const InputDecoration(
+                      border: UnderlineInputBorder(
+                        borderSide: BorderSide(color: Colors.blue),
+                      ),
+                    ),
+                  ),
+                  const SizedBox(
+                    height: 16.0,
+                  ),
+                  const Text(
                     "Your Email",
                     style: TextStyle(
                       fontSize: 14,
                       fontWeight: FontWeight.w600,
                     ),
                   ),
-                  const SizedBox(
-                    height: 8.0,
-                  ),
+                  // const SizedBox(
+                  //   height: 8.0,
+                  // ),
                   TextField(
                     controller: TextEditingController(),
-                    decoration: const InputDecoration(
-                      border: UnderlineInputBorder(
+                    decoration: InputDecoration(
+                      border: const UnderlineInputBorder(
                         borderSide: BorderSide(color: Colors.blue),
+                      ),
+                      suffixIcon: Image.asset(
+                        'assets/images/Message_light.png',
                       ),
                     ),
                   ),
@@ -146,37 +173,24 @@ class _AuthSignUPState extends State<AuthSignUP> {
                     height: 8.0,
                   ),
                   TextField(
-                    controller: TextEditingController(),
-                    decoration: const InputDecoration(
-                      border: UnderlineInputBorder(
+                    controller: _passwordController,
+                    obscureText: !_isPasswordVisible,
+                    decoration: InputDecoration(
+                      border: const UnderlineInputBorder(
                         borderSide: BorderSide(color: Colors.blue),
                       ),
-                    ),
-                  ),
-                ],
-              ),
-            ),
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 25.0),
-              child: Row(
-                children: [
-                  const Text(
-                    "Create Password",
-                    style: TextStyle(
-                      fontSize: 14,
-                      fontWeight: FontWeight.w600,
-                    ),
-                  ),
-                  const SizedBox(
-                    width: 8.17718505859375,
-                    height: 13.176136016845703,
-                  ),
-                  Expanded(
-                    child: TextField(
-                      controller: TextEditingController(),
-                      decoration: const InputDecoration(
-                        border: UnderlineInputBorder(
-                          borderSide: BorderSide(color: Colors.blue),
+                      suffixIcon: GestureDetector(
+                        onTap: () {
+                          setState(() {
+                            _isPasswordVisible = !_isPasswordVisible;
+                          });
+                        },
+                        child: Image.asset(
+                          _isPasswordVisible
+                              ? 'assets/images/mdi_eye.png'
+                              : 'assets/images/mdi_eye-off.png',
+                          width: 10,
+                          height: 10,
                         ),
                       ),
                     ),
