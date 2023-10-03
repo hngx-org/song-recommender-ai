@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:song_recommender_ai/utils/widgets/auth_button.dart';
@@ -231,16 +232,25 @@ class _AuthLoginState extends State<AuthLogin> {
                     final result = await authRepository.signIn(email, password);
                     if (result != null) {
                       final data = json.decode(result.body);
+                      if (!context.mounted) return;
                       showSnackbar(context, Colors.black, 'Login successful');
-                      print('sign in result: >>> $data');
+                      if (kDebugMode) {
+                        print('sign in result: >>> $data');
+                      }
                       // Handle successful login, e.g., navigate to the home screen
                     } else {
-                      print('error:   eeeeeee');
+                      if (!context.mounted) return;
+                      if (kDebugMode) {
+                        print('error:   eeeeeee');
+                      }
                       showSnackbar(context, Colors.red, 'Login ERROR');
                     }
                   } catch (e) {
                     // Handle exceptions or errors here
-                    print('Error signing in: $e');
+                    if (kDebugMode) {
+                      print('Error signing in: $e');
+                    }
+                    if (!context.mounted) return;
                     showSnackbar(context, Colors.red,
                         'An error occurred while signing in');
                   }

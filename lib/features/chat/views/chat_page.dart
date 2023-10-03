@@ -1,5 +1,4 @@
 import 'dart:math';
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
@@ -105,28 +104,32 @@ class _ChatPageState extends State<ChatPage> {
                         itemBuilder: (context, index) {
                           final messageItem = value.getmessages?[index];
                           String key = 'aas';
-                          String num = Random(256).toString();
+                          Random num = Random();
+                          if (index == (value.getmessages!.length.toInt())) {
+                            return Container(
+                              height: 150,
+                            );
+                          }
                           if (messageItem!.isSender) {
                             return UserMessage(
                               text: messageItem.prompt,
                             );
                           } else {
                             return AiMessage(
-                                text: messageItem.prompt,
-                                key: Key(key + num),
-                                shouldAnimate: messageItem.shouldAnimate);
+                              text: messageItem.prompt,
+                              key: Key(key + num.nextInt(256).toString()),
+                              shouldAnimate: messageItem.shouldAnimate,
+                              scrollController: scrollController,
+                            );
                           }
                         },
                       ),
                     ),
                     if (chat.isLoading) ...[
-                      const Flexible(
-                          fit: FlexFit.loose,
-                          flex: 1,
-                          child: Center(
-                              child: SpinKitThreeBounce(
-                            color: Color(0xff3c3c3c),
-                          )))
+                      const Center(
+                          child: SpinKitThreeBounce(
+                        color: Color(0xff3c3c3c),
+                      ))
                     ]
                   ],
                 ),

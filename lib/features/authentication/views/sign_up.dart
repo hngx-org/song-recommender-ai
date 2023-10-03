@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:song_recommender_ai/utils/widgets/auth_button.dart';
@@ -269,16 +270,24 @@ class _AuthSignUPState extends State<AuthSignUP> {
                         await authRepository.signUp(email, name, password);
                     if (result != null) {
                       final data = json.decode(result.body);
+                      if (!context.mounted) return;
                       showSnackbar(context, Colors.black, 'SignUp successful');
-                      print('sign up result: >>> $data');
+                      if (kDebugMode) {
+                        print('sign up result: >>> $data');
+                      }
                       // Navigator.of(context).pushNamed(widget.successRoutePage);
                     } else {
-                      print('error:   eeeeeee');
+                      if (!context.mounted) return;
+                      if (kDebugMode) {
+                        print('error:   eeeeeee');
+                      }
                       showSnackbar(context, Colors.red, 'SignUp ERROR');
                     }
                   } catch (e) {
                     // Handle exceptions or errors here
-                    print('Error signing up: $e');
+                    if (kDebugMode) {
+                      print('Error signing up: $e');
+                    }
                     showSnackbar(context, Colors.red,
                         'An error occurred while signing up');
                   }
