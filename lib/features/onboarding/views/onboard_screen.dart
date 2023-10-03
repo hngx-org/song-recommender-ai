@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:song_recommender_ai/features/inapp_payment/models/payment.model.dart';
 import 'package:song_recommender_ai/features/onboarding/repositories/list_onboard.dart';
 import 'package:song_recommender_ai/features/onboarding/views/onboarding_content.dart';
 
@@ -53,10 +52,10 @@ class _OnboardingViewState extends State<OnboardingView> {
               children: [
                 TextButton(
                     onPressed: () {
-                      Navigator.push(context,
-                          MaterialPageRoute(builder: (context) {
-                        return PaymentView();
-                      }));
+                      // Navigator.push(context,
+                      //     MaterialPageRoute(builder: (context) {
+                      //   return PaymentView();
+                      // }));
                     },
                     child: const Text(
                       'Skip',
