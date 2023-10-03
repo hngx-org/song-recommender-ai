@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:song_recommender_ai/features/inapp_payment/models/payment.model.dart';
+import 'package:song_recommender_ai/features/onboarding/views/onboard_screen.dart';
 
 void main() {
   runApp(const MyApp());
@@ -16,7 +16,7 @@ class MyApp extends StatelessWidget {
         useMaterial3: true,
       ),
       debugShowCheckedModeBanner: false,
-      home: PaymentView(),
+      home: const OnboardingView(),
     );
   }
 }
