@@ -28,10 +28,10 @@ class OAIRepository extends IOPENAIRepository {
     context.read<ChatModel>().setScroll(true);
     try {
       List<Map<String, String>> messageList = [];
-      final propmt =
+      final prompt =
           '''I want you to act as a DJ. You will create a playlist of 10 songs similar to the following text either it is a song/keyword/lyrics/a short prose.
            You must add the title, description and songs with artist names to the answer. No song or artist should be
-            repeated and do not add any anything apart from playlist, descriptiona and title : "${message.prompt}"''';
+            repeated and do not add any anything apart from playlist, descriptions and title : "${message.prompt}"''';
 
       var headers = {
         'Authorization': 'Bearer ${Url.oaiToken}',
@@ -39,11 +39,11 @@ class OAIRepository extends IOPENAIRepository {
       };
 
       final messageSystem = MessageModel(
-          role: 'system', content: 'You are a Music Recommendation Asistant.');
+          role: 'system', content: 'You are a Music Recommendation Assistant.');
 
       messageList.add(messageSystem.toMap());
 
-      final messageUser = messageSystem.copyWith(role: 'user', content: propmt);
+      final messageUser = messageSystem.copyWith(role: 'user', content: prompt);
       messageList.add(messageUser.toMap());
 
       chatsDatabase.saveChat(message.prompt.toString(), chatId,
