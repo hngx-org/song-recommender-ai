@@ -1,30 +1,23 @@
 import 'package:flutter/material.dart';
-import 'package:song_recommender_ai/features/inapp_payment/payment_config.dart';
-import 'package:song_recommender_ai/utils/widgets/custom_input_field.dart';
-import 'package:song_recommender_ai/utils/widgets/custom_list_tile.dart';
+// import 'package:provider/provider.dart';
+import 'package:song_recommender_ai/features/inapp_payment/models/payment_config.dart';
+// import 'package:song_recommender_ai/features/inapp_payment/viewmodels/payment.viewmodel.dart';
 import 'package:song_recommender_ai/utils/widgets/custom_buttons.dart';
 import 'package:pay/pay.dart';
 import 'dart:io';
+import '../repositories/payment.repository.dart';
 
 class PaymentView extends StatelessWidget {
   PaymentView({super.key});
 
-  String os = Platform.operatingSystem;
+  final String os = Platform.operatingSystem;
 
   @override
   Widget build(BuildContext context) {
-    const _paymentItems = [
-      PaymentItem(
-        label: 'Order now',
-        amount: '123.99',
-        status: PaymentItemStatus.final_price,
-      ),
-    ];
-
     final height = MediaQuery.of(context).size.height;
     return Scaffold(
       appBar: AppBar(
-        title: Text('Payment'),
+        title: const Text('Payment'),
         centerTitle: true,
         leading: CustomIconButton(
           onPressed: () {
@@ -66,7 +59,7 @@ class PaymentView extends StatelessWidget {
             SizedBox(
               height: height * 0.04,
             ),
-            Row(
+            const Row(
               children: [
                 Text(
                   'Order total',
@@ -78,12 +71,11 @@ class PaymentView extends StatelessWidget {
                         TextStyle(fontWeight: FontWeight.w400, fontSize: 20.0))
               ],
             ),
-
             Platform.isIOS
                 ? ApplePayButton(
                     paymentConfiguration:
                         PaymentConfiguration.fromJsonString(defaultApplePay),
-                    paymentItems: _paymentItems,
+                    paymentItems: paymentItems,
                     style: ApplePayButtonStyle.black,
                     type: ApplePayButtonType.buy,
                     width: double.infinity,
@@ -97,12 +89,10 @@ class PaymentView extends StatelessWidget {
                 : GooglePayButton(
                     paymentConfiguration:
                         PaymentConfiguration.fromJsonString(defaultGooglePay),
-                    paymentItems: _paymentItems,
+                    paymentItems: paymentItems,
                     type: GooglePayButtonType.pay,
                     margin: const EdgeInsets.only(top: 15.0),
-                    onPaymentResult: (data) {
-                      print('data');
-                    },
+                    onPaymentResult: (data) {},
                     width: double.infinity,
                     loadingIndicator: const Center(
                       child: CircularProgressIndicator(),

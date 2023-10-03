@@ -14,7 +14,7 @@ class CustomCheckboxListTile extends StatelessWidget {
       onChanged: (value) {},
       shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(20),
-          side: BorderSide(color: Colors.black)),
+          side: const BorderSide(color: Colors.black)),
       checkboxShape:
           RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
       title: title,

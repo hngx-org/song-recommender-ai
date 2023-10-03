@@ -12,13 +12,13 @@ class CustomTextInput extends StatelessWidget {
       onChanged: (value) {},
       decoration: InputDecoration(
         hintText: hintText,
-        hintStyle: TextStyle(color: Colors.indigo, fontSize: 17.0),
-        contentPadding: EdgeInsets.only(left: 20.0, top: 0, bottom: 0),
+        hintStyle: const TextStyle(color: Colors.indigo, fontSize: 17.0),
+        contentPadding: const EdgeInsets.only(left: 20.0, top: 0, bottom: 0),
         suffixIcon: icon,
-        enabledBorder: UnderlineInputBorder(
+        enabledBorder: const UnderlineInputBorder(
           borderSide: BorderSide.none,
         ),
-        focusedBorder: UnderlineInputBorder(borderSide: BorderSide.none
+        focusedBorder: const UnderlineInputBorder(borderSide: BorderSide.none
             // disabledBorder: UnderlineInputBorder(
             //     borderSide: BorderSide(color: Colors.indigo, width: 2.0))
             ),
