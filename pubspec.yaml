@@ -20,6 +20,7 @@ version: 1.0.0+1
 
 environment:
   sdk: ">=3.1.2 <4.0.0"
+  sdk: '>=3.1.0 <4.0.0'
 
 # Dependencies specify other packages that your package needs in order to work.
 # To automatically upgrade your package dependencies to the latest versions
@@ -36,6 +37,7 @@ dependencies:
   flutter:
     sdk: flutter
   flutter_spinkit: ^5.2.0
+  pay: ^1.1.2
   flutter_svg: ^2.0.7
   hng_authentication: ^0.0.3
   hngx_openai:

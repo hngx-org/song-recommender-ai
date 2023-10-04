@@ -16,8 +16,12 @@ class MyApp extends StatelessWidget {
   const MyApp({super.key});
 
   // This widget is the root of your application.
+<<<<<<< HEAD
 
   @override
+=======
+   @override
+>>>>>>> 5ed81bb624b8adebd81bad9ea972dbe663e0033f
   Widget build(BuildContext context) {
     return MultiProvider(
       providers: [
