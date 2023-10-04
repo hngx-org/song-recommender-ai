@@ -23,21 +23,23 @@ class UserInput extends StatelessWidget {
       child: Padding(
         padding: const EdgeInsets.all(12.0),
         child: TextFormField(
-          // autofocus: true,
-          onFieldSubmitted: (e) {
+          onFieldSubmitted: (e) async {
             final msg =
                 Message(isSender: true, prompt: e, shouldAnimate: false);
             if (chatcontroller.text.isEmpty) {
               ScaffoldMessenger.of(context).showSnackBar(
                   const SnackBar(content: Text('Please enter some message.')));
             } else {
-              context.read<ChatModel>().sendPrompt(msg, context, chatId);
+              if (!context.mounted) return;
+              await context.read<ChatModel>().sendPrompt(msg, context, chatId);
               chatFocus.unfocus();
               chatcontroller.clear();
-              scrollController.animateTo(
-                  scrollController.position.maxScrollExtent,
-                  duration: const Duration(microseconds: 300),
-                  curve: Curves.fastLinearToSlowEaseIn);
+              if (scrollController.hasClients) {
+                scrollController.animateTo(
+                    scrollController.position.maxScrollExtent,
+                    duration: const Duration(milliseconds: 10),
+                    curve: Curves.fastLinearToSlowEaseIn);
+              }
             }
           },
           controller: chatcontroller,

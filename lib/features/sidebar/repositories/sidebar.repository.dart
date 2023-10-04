@@ -2,6 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:song_recommender_ai/features/chat/services/chats_database.dart';
+import 'package:song_recommender_ai/features/chat/views/chat_page.dart';
 import 'package:song_recommender_ai/features/sidebar/models/sidebar.model.dart';
 import 'package:song_recommender_ai/features/sidebar/viewmodels/sidebar.viewmodel.dart';
 import 'package:song_recommender_ai/utils/res/icons.dart';
@@ -37,6 +38,8 @@ class SidebarRepository extends ISidebarRepository {
           await chatsDatabase.removeAllChats();
           if (!context.mounted) return;
           context.read<ChatProvider>().fetchChats(uid);
+          Navigator.pushReplacement(
+              context, MaterialPageRoute(builder: (_) => const ChatPage()));
         },
       ),
       FooterItems(

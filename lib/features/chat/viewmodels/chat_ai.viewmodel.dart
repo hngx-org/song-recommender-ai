@@ -25,20 +25,13 @@ class ChatModel with ChangeNotifier {
   IOPENAIRepository iopenaiRepository = OAIRepository();
   Future<void> sendPrompt(
       Message message, BuildContext context, String chatId) async {
-    addUserMessageWidget(message.prompt);
-    Map<String, dynamic> response =
+    if (!context.mounted) return;
+    String response =
         await iopenaiRepository.sendMessage(message, context, chatId);
 
     if (kDebugMode) {
       print(response.toString());
     }
-    // String text = response['choices'][0]['message']['content'].toString();
-    // messages.add(Message(isSender: false, prompt: text));
-    notifyListeners();
-  }
-
-  void addUserMessageWidget(String txt) {
-    // messages.add(Message(isSender: true, prompt: txt));
     notifyListeners();
   }
 }

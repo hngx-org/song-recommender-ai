@@ -17,7 +17,7 @@ class MyApp extends StatelessWidget {
 
   // This widget is the root of your application.
 
-   @override
+  @override
   Widget build(BuildContext context) {
     return MultiProvider(
       providers: [
@@ -28,7 +28,7 @@ class MyApp extends StatelessWidget {
       child: MaterialApp(
         debugShowCheckedModeBanner: false,
         theme: ThemeData(
-          colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
+          colorScheme: ColorScheme.fromSeed(seedColor: const Color(0xffECEBF0)),
           useMaterial3: true,
         ),
         home: const SafeArea(bottom: true, top: false, child: ChatPage()),
@@ -64,4 +64,3 @@ class MyApp extends StatelessWidget {
   //   );
   // }
 }
-

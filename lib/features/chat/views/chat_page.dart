@@ -30,6 +30,7 @@ class _ChatPageState extends State<ChatPage> {
   Future<List<Message>?>? messages;
 
   final uid = '112sss';
+  bool showProgressIndicator = true;
 
   ///We are fetching messages in the initState method from the firestore.
   @override
@@ -62,6 +63,11 @@ class _ChatPageState extends State<ChatPage> {
       }
     });
 
+    Future.delayed(const Duration(seconds: 2), () {
+      setState(() {});
+      showProgressIndicator = false;
+    });
+
     ///Sidebar and appbar widgets are handled in the separate widget and called here.
     return Scaffold(
       appBar: Utils.setAppbar(Builder(builder: (BuildContext context) {
@@ -85,10 +91,12 @@ class _ChatPageState extends State<ChatPage> {
         children: [
           //chat
           Consumer<MessageViewModel>(builder: (context, value, child) {
-            if (value.getmessages == null) {
-              return const Center(
-                child: CircularProgressIndicator(),
-              );
+            if (value.getmessages == null || value.getmessages!.isEmpty) {
+              return showProgressIndicator
+                  ? const Center(
+                      child: CircularProgressIndicator(),
+                    )
+                  : const Center(child: Text('No chats Started!'));
             } else {
               return Container(
                 margin: const EdgeInsets.only(bottom: 80),
