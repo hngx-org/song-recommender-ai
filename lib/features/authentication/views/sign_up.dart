@@ -6,17 +6,19 @@ import 'package:hng_authentication/authentication.dart';
 import 'package:hng_authentication/widgets/widget.dart';
 import 'dart:convert';
 
-class AuthLogin extends StatefulWidget {
-  const AuthLogin({Key? key}) : super(key: key);
+class AuthSignUP extends StatefulWidget {
+  const AuthSignUP({Key? key}) : super(key: key);
 
   @override
-  _AuthLoginState createState() => _AuthLoginState();
+  _AuthSignUPState createState() => _AuthSignUPState();
 }
 
-class _AuthLoginState extends State<AuthLogin> {
+class _AuthSignUPState extends State<AuthSignUP> {
   bool _isPasswordVisible = false;
   final TextEditingController passwordController = TextEditingController();
   final TextEditingController emailController = TextEditingController();
+  final TextEditingController nameController = TextEditingController();
+  // final String successRoutePage;
   late Authentication authRepository;
 
   @override
@@ -80,7 +82,7 @@ class _AuthLoginState extends State<AuthLogin> {
                     child: Row(
                       children: [
                         const Text(
-                          "Welcome back",
+                          "Hello there",
                           style: TextStyle(
                             fontSize: 20,
                             fontWeight: FontWeight.w600,
@@ -108,7 +110,14 @@ class _AuthLoginState extends State<AuthLogin> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      "Please enter you email & password to sign in",
+                      "Please enter you email & password to create an",
+                      style: TextStyle(
+                        fontSize: 14,
+                        fontWeight: FontWeight.w400,
+                      ),
+                    ),
+                    Text(
+                      "account ",
                       style: TextStyle(
                         fontSize: 14,
                         fontWeight: FontWeight.w400,
@@ -123,6 +132,27 @@ class _AuthLoginState extends State<AuthLogin> {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
+                  const Text(
+                    "Your Name",
+                    style: TextStyle(
+                      fontSize: 14,
+                      fontWeight: FontWeight.w600,
+                    ),
+                  ),
+                  // const SizedBox(
+                  //   height: 8.0,
+                  // ),
+                  TextField(
+                    controller: nameController,
+                    decoration: const InputDecoration(
+                      border: UnderlineInputBorder(
+                        borderSide: BorderSide(color: Colors.blue),
+                      ),
+                    ),
+                  ),
+                  const SizedBox(
+                    height: 16.0,
+                  ),
                   const Text(
                     "Your Email",
                     style: TextStyle(
@@ -148,7 +178,7 @@ class _AuthLoginState extends State<AuthLogin> {
                     height: 16.0,
                   ),
                   const Text(
-                    "Password",
+                    "Create Password",
                     style: TextStyle(
                       fontSize: 14,
                       fontWeight: FontWeight.w600,
@@ -207,12 +237,18 @@ class _AuthLoginState extends State<AuthLogin> {
                   Expanded(
                     child: RichText(
                       text: const TextSpan(
-                        text: 'Remember me ',
+                        text: 'I agree to Music AI Public ',
                         style: TextStyle(
                           fontSize: 14,
                           fontWeight: FontWeight.w500,
                           color: Colors.black,
                         ),
+                        children: [
+                          TextSpan(
+                            text: 'Agreement, Terms and Privacy Policy',
+                            style: TextStyle(color: Color(0xff2111ad)),
+                          ),
+                        ],
                       ),
                     ),
                   ),
@@ -226,33 +262,34 @@ class _AuthLoginState extends State<AuthLogin> {
                 onPressed: () async {
                   final email = emailController.text;
                   final password = passwordController.text;
+                  final name = nameController.text;
 
-                  // Call the signIn method from the Authentication class
+                  // Call the signUp method from the Authentication class
                   try {
-                    final result = await authRepository.signIn(email, password);
+                    final result =
+                        await authRepository.signUp(email, name, password);
                     if (result != null) {
                       final data = json.decode(result.body);
                       if (!context.mounted) return;
-                      showSnackbar(context, Colors.black, 'Login successful');
+                      showSnackbar(context, Colors.black, 'SignUp successful');
                       if (kDebugMode) {
-                        print('sign in result: >>> $data');
+                        print('sign up result: >>> $data');
                       }
-                      // Handle successful login, e.g., navigate to the home screen
+                      // Navigator.of(context).pushNamed(widget.successRoutePage);
                     } else {
                       if (!context.mounted) return;
                       if (kDebugMode) {
                         print('error:   eeeeeee');
                       }
-                      showSnackbar(context, Colors.red, 'Login ERROR');
+                      showSnackbar(context, Colors.red, 'SignUp ERROR');
                     }
                   } catch (e) {
                     // Handle exceptions or errors here
                     if (kDebugMode) {
-                      print('Error signing in: $e');
+                      print('Error signing up: $e');
                     }
-                    if (!context.mounted) return;
                     showSnackbar(context, Colors.red,
-                        'An error occurred while signing in');
+                        'An error occurred while signing up');
                   }
                 },
                 child: const Text(
@@ -266,18 +303,6 @@ class _AuthLoginState extends State<AuthLogin> {
             const SizedBox(
               height: 16.0,
             ),
-            Center(
-              child: TextButton(
-                  onPressed: () {},
-                  child: const Text(
-                    'Forgot password?',
-                    style: TextStyle(
-                      fontSize: 14,
-                      fontWeight: FontWeight.w500,
-                      color: Color(0xff2111ad),
-                    ),
-                  )),
-            ),
             Stack(
               children: [
                 // Your other widgets here
@@ -286,14 +311,14 @@ class _AuthLoginState extends State<AuthLogin> {
                   child: TextButton(
                     onPressed: () {
                       // Handle button press here
-                      Navigator.pushNamed(context, '/signup');
+                      Navigator.pushNamed(context, '/login');
                     },
                     child: const Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       mainAxisSize: MainAxisSize.min,
                       children: [
                         Text(
-                          "Don't have an account?",
+                          'Already have an account?',
                           style: TextStyle(
                             fontSize: 14,
                             fontWeight: FontWeight.w500,
@@ -302,7 +327,7 @@ class _AuthLoginState extends State<AuthLogin> {
                         ),
                         SizedBox(width: 4.0),
                         Text(
-                          'Sign up',
+                          'Sign in',
                           style: TextStyle(
                             fontSize: 14,
                             fontWeight: FontWeight.w500,
