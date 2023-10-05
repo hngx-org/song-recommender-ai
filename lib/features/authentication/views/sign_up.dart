@@ -293,6 +293,7 @@ class _AuthSignUPState extends State<AuthSignUP> {
                           'sign up result: >>> ${user.id}, ${user.name}, ${user.email}');
 
                       // Navigate to success page here
+                      Navigator.pushReplacementNamed(context, '/login');
                     } else {
                       showSnackbar(context, Colors.red, 'SignUp ERROR');
                     }

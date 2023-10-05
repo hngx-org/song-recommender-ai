@@ -258,6 +258,7 @@ class _AuthLoginState extends State<AuthLogin> {
                           .d('User Cookies: ${prefs.getString('userCookies')}');
                       logger.d('User Credits: ${prefs.getString('userCredits')}');
                       // Navigate to success page here
+                      Navigator.pushNamed(context, '/chat');
                     } else {
                       showSnackbar(context, Colors.red, 'Login ERROR');
                     }
