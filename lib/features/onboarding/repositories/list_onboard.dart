@@ -14,7 +14,7 @@ final List<Onboard> onboardingContent = [
         'Express your feelings thoughts or a specific vibe\nyou are looking for in the text box.',
   ),
   Onboard(
-    image: 'assets/images/content3.png',
+    image: 'assets/images/Play_illustration.png',
     title: 'Get your playlists and enjoy!!',
     description:
         'SongScript AI transforms your words into\npersonalized music recommendations and\ncurates a playlist for you.',

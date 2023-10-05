@@ -30,73 +30,76 @@ class _OnboardingViewState extends State<OnboardingView> {
     final height = MediaQuery.of(context).size.height;
     final width = MediaQuery.of(context).size.width;
     return Scaffold(
-      body: Column(
-        children: [
-          Expanded(
-            child: PageView.builder(
-                itemCount: onboardingContent.length,
-                controller: _pageController,
-                onPageChanged: (index) {
-                  setState(() {
-                    _pageIndex = index;
-                  });
-                },
-                itemBuilder: (context, index) => OnboardingContent(
-                    image: onboardingContent[index].image,
-                    title: onboardingContent[index].title,
-                    description: onboardingContent[index].description)),
-          ),
-          Padding(
-            padding: const EdgeInsets.only(bottom: 30.0),
-            child: Row(
-              children: [
-                Visibility(
-                  visible: (_pageIndex < 2),
-                  child: TextButton(
+      body: Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 8.0),
+        child: Column(
+          children: [
+            Expanded(
+              child: PageView.builder(
+                  itemCount: onboardingContent.length,
+                  controller: _pageController,
+                  onPageChanged: (index) {
+                    setState(() {
+                      _pageIndex = index;
+                    });
+                  },
+                  itemBuilder: (context, index) => OnboardingContent(
+                      image: onboardingContent[index].image,
+                      title: onboardingContent[index].title,
+                      description: onboardingContent[index].description)),
+            ),
+            Padding(
+              padding: const EdgeInsets.only(bottom: 30.0),
+              child: Row(
+                children: [
+                  Visibility(
+                    visible: (_pageIndex < 2),
+                    child: TextButton(
+                        onPressed: () {
+                          Navigator.pushReplacementNamed(context, '/login');
+                        },
+                        child: const Text(
+                          'Skip',
+                          style: TextStyle(
+                              color: Colors.grey,
+                              fontSize: 18.0,
+                              fontWeight: FontWeight.w400),
+                        )),
+                  ),
+                  const Expanded(child: SizedBox()),
+                  ...List.generate(
+                      onboardingContent.length,
+                      (index) => Padding(
+                            padding: const EdgeInsets.all(4.0),
+                            child: Indicator(
+                              height: height,
+                              width: width,
+                              isActive: index == _pageIndex,
+                            ),
+                          )),
+                  const Expanded(child: SizedBox()),
+                  TextButton(
                       onPressed: () {
-                        Navigator.pushReplacementNamed(context, '/login');
+                        if (_pageIndex == 2) {
+                          Navigator.pushReplacementNamed(context, '/login');
+                        } else {
+                          _pageController.nextPage(
+                              duration: const Duration(milliseconds: 200),
+                              curve: Curves.ease);
+                        }
                       },
                       child: const Text(
-                        'Skip',
+                        'Next',
                         style: TextStyle(
-                            color: Colors.grey,
+                            color: Colors.black,
                             fontSize: 18.0,
                             fontWeight: FontWeight.w400),
-                      )),
-                ),
-                const Expanded(child: SizedBox()),
-                ...List.generate(
-                    onboardingContent.length,
-                    (index) => Padding(
-                          padding: const EdgeInsets.all(4.0),
-                          child: Indicator(
-                            height: height,
-                            width: width,
-                            isActive: index == _pageIndex,
-                          ),
-                        )),
-                const Expanded(child: SizedBox()),
-                TextButton(
-                    onPressed: () {
-                      if (_pageIndex == 2) {
-                        Navigator.pushReplacementNamed(context, '/login');
-                      } else {
-                        _pageController.nextPage(
-                            duration: const Duration(milliseconds: 200),
-                            curve: Curves.ease);
-                      }
-                    },
-                    child: const Text(
-                      'Next',
-                      style: TextStyle(
-                          color: Colors.black,
-                          fontSize: 18.0,
-                          fontWeight: FontWeight.w400),
-                    ))
-              ],
-            ),
-          )
-        ],
+                      ))
+                ],
+              ),
+            )
+          ],
+        ),
       ),
     );
   }
