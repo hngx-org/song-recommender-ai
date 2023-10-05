@@ -4,6 +4,8 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:song_recommender_ai/utils/widgets/auth_button.dart';
 import 'package:hng_authentication/authentication.dart';
 import 'package:hng_authentication/widgets/widget.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+import 'package:logger/logger.dart';
 import 'dart:convert';
 
 class AuthSignUP extends StatefulWidget {
@@ -20,6 +22,8 @@ class _AuthSignUPState extends State<AuthSignUP> {
   final TextEditingController nameController = TextEditingController();
   // final String successRoutePage;
   late Authentication authRepository;
+
+  final logger = Logger();
 
   @override
   void initState() {
@@ -263,24 +267,33 @@ class _AuthSignUPState extends State<AuthSignUP> {
                   final email = emailController.text;
                   final password = passwordController.text;
                   final name = nameController.text;
+                  final authRepository = Authentication();
 
                   // Call the signUp method from the Authentication class
                   try {
-                    final result =
+                    final user =
                         await authRepository.signUp(email, name, password);
-                    if (result != null) {
-                      final data = json.decode(result.body);
-                      if (!context.mounted) return;
+                    if (user != null) {
+                      final prefs = await SharedPreferences.getInstance();
+                      await prefs.setString('userEmail', user.email);
+                      await prefs.setString('userName', user.name);
+                      await prefs.setString('userCookies', '');
+                      await prefs.setInt('userCredits', user.credits!);
+
+                      logger.d('Saved user details:');
+                      logger.d('User Name: ${prefs.getString('userName')}');
+                      logger.d('User Email: ${prefs.getString('userEmail')}');
+                      logger
+                          .d('User Cookies: ${prefs.getString('userCookies')}');
+                      logger.d('User Credits: ${prefs.getInt('userCredits')}');
+
                       showSnackbar(context, Colors.black, 'SignUp successful');
-                      if (kDebugMode) {
-                        print('sign up result: >>> $data');
-                      }
-                      // Navigator.of(context).pushNamed(widget.successRoutePage);
+                      // print('sign up result: >>> $user');
+                      print(
+                          'sign up result: >>> ${user.id}, ${user.name}, ${user.email}');
+
+                      // Navigate to success page here
                     } else {
-                      if (!context.mounted) return;
-                      if (kDebugMode) {
-                        print('error:   eeeeeee');
-                      }
                       showSnackbar(context, Colors.red, 'SignUp ERROR');
                     }
                   } catch (e) {

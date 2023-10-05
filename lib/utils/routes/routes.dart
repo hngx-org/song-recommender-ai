@@ -11,7 +11,8 @@ class Routes {
         page = const AuthLogin();
         break;
       case '/signup':
-        page = const AuthSignUP();
+        page = const AuthSignUP
+        ();
         break;
       default:
         page = const Center(
