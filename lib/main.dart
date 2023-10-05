@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:song_recommender_ai/features/authentication/views/login_page.dart';
+import 'package:song_recommender_ai/features/authentication/views/sign_up.dart';
 import 'package:song_recommender_ai/features/chat/viewmodels/chat_ai.viewmodel.dart';
 import 'package:song_recommender_ai/features/chat/viewmodels/messages.viewmodel.dart';
 import 'package:firebase_core/firebase_core.dart';
@@ -30,7 +32,13 @@ class MyApp extends StatelessWidget {
           colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
           useMaterial3: true,
         ),
-        home: SafeArea(bottom: true, top: false, child: PaymentView()),
+        // home: const SafeArea(bottom: true, top: false, child: ChatPage()),
+        initialRoute: '/signup',
+        routes: {
+          '/signup': (context) => const AuthSignUP(),
+          '/login': (context) => const AuthLogin(),
+          '/chat': (context) => const ChatPage(),
+        },
       ),
     );
   }
