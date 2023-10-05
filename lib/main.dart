@@ -9,6 +9,7 @@ import 'package:song_recommender_ai/features/chat/viewmodels/chat_ai.viewmodel.d
 import 'package:song_recommender_ai/features/chat/viewmodels/messages.viewmodel.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:song_recommender_ai/features/chat/views/chat_page.dart';
+import 'package:song_recommender_ai/features/inapp_payment/viewmodels/payment.viewmodel.dart';
 import 'package:song_recommender_ai/features/inapp_payment/views/payment_page.dart';
 import 'package:song_recommender_ai/features/onboarding/views/onboard_screen.dart';
 import 'package:song_recommender_ai/features/sidebar/viewmodels/sidebar.viewmodel.dart';
@@ -41,7 +42,8 @@ class MyApp extends StatelessWidget {
         ChangeNotifierProvider(create: (_) => ChatModel()),
         ChangeNotifierProvider(create: (_) => ChatProvider()),
         ChangeNotifierProvider(create: (_) => MessageViewModel()),
-        ChangeNotifierProvider(create: (_) => AuthViewModel())
+        ChangeNotifierProvider(create: (_) => AuthViewModel()),
+        ChangeNotifierProvider(create: (_) => PaymentViewModel())
       ],
       child: MaterialApp(
         locale: DevicePreview.locale(context),
