@@ -338,10 +338,10 @@ packages:
     description:
       path: "."
       ref: main
-      resolved-ref: "726231df5876b765128a2c21717996e52e5b2811"
+      resolved-ref: ddf023869cc9470f2111d6816ed25381dd92e363
       url: "https://github.com/hngx-org/openai-package.git"
     source: git
-    version: "1.0.1"
+    version: "1.0.2"
   http:
     dependency: "direct main"
     description:
@@ -362,10 +362,10 @@ packages:
     dependency: "direct main"
     description:
       name: in_app_payment
-      sha256: "4b44f782910dca3fb5f9506529f5b081b098973e2a0a816cf7e238737dd5cd15"
+      sha256: "6417c498c618c5007445681fc019b32c9b5719290aa28893c79875249108752d"
       url: "https://pub.dev"
     source: hosted
-    version: "0.0.1"
+    version: "0.0.2"
   intl:
     dependency: transitive
     description:
@@ -535,7 +535,7 @@ packages:
     source: hosted
     version: "2.2.1"
   pay:
-    dependency: "direct main"
+    dependency: transitive
     description:
       name: pay
       sha256: d7525538a66af1982a0932d3969416e835a6aeafda59e280ed2d1f410b4aaa09

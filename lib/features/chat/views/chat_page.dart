@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
@@ -6,6 +7,7 @@ import 'package:provider/provider.dart';
 import 'package:song_recommender_ai/features/chat/models/user_message.model.dart';
 import 'package:song_recommender_ai/features/chat/viewmodels/chat_ai.viewmodel.dart';
 import 'package:song_recommender_ai/features/chat/viewmodels/messages.viewmodel.dart';
+import 'package:song_recommender_ai/utils/res/colors.dart';
 import 'package:song_recommender_ai/utils/widgets/ai.widget.dart';
 import 'package:song_recommender_ai/utils/widgets/filter_button.dart.dart';
 import 'package:song_recommender_ai/utils/widgets/subscription_warning_widget.dart';
@@ -41,6 +43,11 @@ class _ChatPageState extends State<ChatPage> {
     super.initState();
     final messagesVM = Provider.of<MessageViewModel>(context, listen: false);
     messagesVM.fetchMessages(widget.chatid);
+    Future.delayed(const Duration(milliseconds: 300), () {
+      setState(() {
+        showProgressIndicator = false;
+      });
+    });
   }
 
   @override
@@ -75,7 +82,7 @@ class _ChatPageState extends State<ChatPage> {
         );
       }), () {}),
       drawer: AppDrawer(
-        uid: context.read<MessageViewModel>().uid,
+        uid: Provider.of<MessageViewModel>(context).uid,
       ),
 
       ///Consumer function from the provider package to load the messages list.
@@ -91,90 +98,98 @@ class _ChatPageState extends State<ChatPage> {
               );
             }
             if (value.getmessages == null || value.getmessages!.isEmpty) {
-              return value.isProgress
+              return (chat.isLoading)
                   ? const Center(
-                      child: CircularProgressIndicator(),
-                    )
-                  : Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 12.0),
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          const SizedBox(
-                            height: 10,
+                      child: SpinKitThreeBounce(
+                      color: AppColors.userWidgetColor,
+                      size: 50,
+                    ))
+                  : value.isProgress
+                      ? const Center(
+                          child: CircularProgressIndicator(),
+                        )
+                      : Padding(
+                          padding: const EdgeInsets.symmetric(horizontal: 12.0),
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              const SizedBox(
+                                height: 10,
+                              ),
+                              FilterButtonDart(
+                                  onTap: () async {
+                                    chat.setLoading(true);
+                                    if (!context.mounted) return;
+                                    final msg = Message(
+                                        isSender: true,
+                                        prompt: 'Fly me to the moon!',
+                                        shouldAnimate: false);
+                                    await context.read<ChatModel>().sendPrompt(
+                                        msg, context, widget.chatid);
+                                    chatFocus.unfocus();
+                                    if (scrollController.hasClients) {
+                                      scrollController.animateTo(
+                                          scrollController
+                                              .position.maxScrollExtent,
+                                          duration:
+                                              const Duration(milliseconds: 10),
+                                          curve: Curves.fastLinearToSlowEaseIn);
+                                    }
+                                  },
+                                  content: 'Fly me to the moon!',
+                                  leadingIcon: Icons.library_music),
+                              const SizedBox(
+                                height: 10,
+                              ),
+                              FilterButtonDart(
+                                  onTap: () async {
+                                    chat.setLoading(true);
+                                    if (!context.mounted) return;
+                                    final msg = Message(
+                                        isSender: true,
+                                        prompt: 'Al-Green',
+                                        shouldAnimate: false);
+                                    await context.read<ChatModel>().sendPrompt(
+                                        msg, context, widget.chatid);
+                                    chatFocus.unfocus();
+                                    if (scrollController.hasClients) {
+                                      scrollController.animateTo(
+                                          scrollController
+                                              .position.maxScrollExtent,
+                                          duration:
+                                              const Duration(milliseconds: 10),
+                                          curve: Curves.fastLinearToSlowEaseIn);
+                                    }
+                                  },
+                                  content: 'Al-Green',
+                                  leadingIcon: Icons.music_note),
+                              const SizedBox(
+                                height: 10,
+                              ),
+                              FilterButtonDart(
+                                  onTap: () async {
+                                    if (!context.mounted) return;
+                                    final msg = Message(
+                                        isSender: true,
+                                        prompt: 'Melancholic',
+                                        shouldAnimate: false);
+                                    await context.read<ChatModel>().sendPrompt(
+                                        msg, context, widget.chatid);
+                                    chatFocus.unfocus();
+                                    if (scrollController.hasClients) {
+                                      scrollController.animateTo(
+                                          scrollController
+                                              .position.maxScrollExtent,
+                                          duration:
+                                              const Duration(milliseconds: 10),
+                                          curve: Curves.fastLinearToSlowEaseIn);
+                                    }
+                                  },
+                                  content: 'Melancholic',
+                                  leadingIcon: Icons.mood_outlined)
+                            ],
                           ),
-                          FilterButtonDart(
-                              onTap: () async {
-                                if (!context.mounted) return;
-                                final msg = Message(
-                                    isSender: true,
-                                    prompt: 'Fly me to the moon!',
-                                    shouldAnimate: false);
-                                await context
-                                    .read<ChatModel>()
-                                    .sendPrompt(msg, context, widget.chatid);
-                                chatFocus.unfocus();
-                                if (scrollController.hasClients) {
-                                  scrollController.animateTo(
-                                      scrollController.position.maxScrollExtent,
-                                      duration:
-                                          const Duration(milliseconds: 10),
-                                      curve: Curves.fastLinearToSlowEaseIn);
-                                }
-                              },
-                              content: 'Fly me to the moon!',
-                              leadingIcon: Icons.library_music),
-                          const SizedBox(
-                            height: 10,
-                          ),
-                          FilterButtonDart(
-                              onTap: () async {
-                                if (!context.mounted) return;
-                                final msg = Message(
-                                    isSender: true,
-                                    prompt: 'Al-Green',
-                                    shouldAnimate: false);
-                                await context
-                                    .read<ChatModel>()
-                                    .sendPrompt(msg, context, widget.chatid);
-                                chatFocus.unfocus();
-                                if (scrollController.hasClients) {
-                                  scrollController.animateTo(
-                                      scrollController.position.maxScrollExtent,
-                                      duration:
-                                          const Duration(milliseconds: 10),
-                                      curve: Curves.fastLinearToSlowEaseIn);
-                                }
-                              },
-                              content: 'Al-Green',
-                              leadingIcon: Icons.music_note),
-                          const SizedBox(
-                            height: 10,
-                          ),
-                          FilterButtonDart(
-                              onTap: () async {
-                                if (!context.mounted) return;
-                                final msg = Message(
-                                    isSender: true,
-                                    prompt: 'Melancholic',
-                                    shouldAnimate: false);
-                                await context
-                                    .read<ChatModel>()
-                                    .sendPrompt(msg, context, widget.chatid);
-                                chatFocus.unfocus();
-                                if (scrollController.hasClients) {
-                                  scrollController.animateTo(
-                                      scrollController.position.maxScrollExtent,
-                                      duration:
-                                          const Duration(milliseconds: 10),
-                                      curve: Curves.fastLinearToSlowEaseIn);
-                                }
-                              },
-                              content: 'Melancholic',
-                              leadingIcon: Icons.mood_outlined)
-                        ],
-                      ),
-                    );
+                        );
             } else {
               return Container(
                 margin: const EdgeInsets.only(bottom: 80),
@@ -234,63 +249,6 @@ class _ChatPageState extends State<ChatPage> {
                   scrollToBottom();
                 }),
           ),
-          /* FutureBuilder<List<Message>?>(
-              future: context.read<MessageViewModel>().getmessages,
-              builder: (context, snapshot) {
-                if (!snapshot.hasData) {
-                  return const Center(child: CircularProgressIndicator());
-                } else if (snapshot.hasError) {
-                  if (kDebugMode) {
-                    print(snapshot.error.toString());
-                  }
-                  return Center(child: Text(snapshot.error.toString()));
-                }
-                if (snapshot.data == null || snapshot.data!.isEmpty) {
-                  return const Center(child: Text('Start new chat!'));
-                } else {
-                  return Container(
-                    margin: const EdgeInsets.only(bottom: 80),
-                    child: Column(
-                      children: [
-                        Flexible(
-                          flex: 6,
-                          fit: FlexFit.loose,
-                          child: ListView.builder(
-                            controller: scrollController,
-                            shrinkWrap: true,
-                            itemCount: snapshot.data?.length,
-                            itemBuilder: (context, index) {
-                              final messageItem = snapshot.data?[index];
-                              String key = 'aas';
-                              String num = Random(256).toString();
-                              if (messageItem!.isSender) {
-                                return UserMessage(
-                                  text: messageItem.prompt,
-                                );
-                              } else {
-                                return AiMessage(
-                                    text: messageItem.prompt,
-                                    key: Key(key + num),
-                                    shouldAnimate: messageItem.shouldAnimate);
-                              }
-                            },
-                          ),
-                        ),
-                        if (chat.isLoading) ...[
-                          const Flexible(
-                              fit: FlexFit.loose,
-                              flex: 1,
-                              child: Center(
-                                  child: SpinKitThreeBounce(
-                                color: Color(0xff3c3c3c),
-                              )))
-                        ]
-                      ],
-                    ),
-                  );
-                }
-              }),
- */ //input
           UserInput(
             scrollController: scrollController,
             chatcontroller: chatController,
@@ -308,6 +266,13 @@ class _ChatPageState extends State<ChatPage> {
         scrollController.jumpTo(itemCount.toDouble());
       });
     }
+  }
+
+  void showLoading() {
+    const SpinKitThreeBounce(
+      color: AppColors.userWidgetColor,
+      duration: Duration(seconds: 600),
+    );
   }
 
   void scrollToBottom() {

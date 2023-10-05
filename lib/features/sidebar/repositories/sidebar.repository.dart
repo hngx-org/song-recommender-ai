@@ -22,6 +22,7 @@ class SidebarRepository extends ISidebarRepository {
 
   @override
   Future<List<Conversation>> getSidebarChatTiles(String uid) async {
+    debugPrint('User ID: $uid');
     final querysnapshot =
         await _firestore.collection('users').doc(uid).collection('chats').get();
     final chats = querysnapshot.docs.map((chat) {

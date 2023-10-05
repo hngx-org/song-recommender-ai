@@ -7,6 +7,7 @@ import 'package:song_recommender_ai/features/chat/views/chat_page.dart';
 import 'package:song_recommender_ai/features/sidebar/models/sidebar.model.dart';
 import 'package:song_recommender_ai/features/sidebar/repositories/sidebar.repository.dart';
 import 'package:song_recommender_ai/features/sidebar/viewmodels/sidebar.viewmodel.dart';
+import 'package:song_recommender_ai/utils/res/icons.dart';
 import 'package:song_recommender_ai/utils/res/utils.dart';
 
 import '../../authentication/viewmodels/auth.viewmodel.dart';
@@ -27,10 +28,12 @@ class _AppDrawerState extends State<AppDrawer> {
   @override
   void initState() {
     final sidebarchats = Provider.of<ChatProvider>(context, listen: false);
-    sidebarchats.fetchChats(widget.uid);
-    debugPrint(widget.uid);
-    sidebarFooters = sidebarRepository.getSidebarFooter(widget.uid, context);
-    chatsDatabase = ChatsDatabase(uid: widget.uid);
+    if (widget.uid.isNotEmpty) {
+      sidebarchats.fetchChats(widget.uid);
+      debugPrint(widget.uid);
+      sidebarFooters = sidebarRepository.getSidebarFooter(widget.uid, context);
+      chatsDatabase = ChatsDatabase(uid: widget.uid);
+    }
     super.initState();
   }
 
@@ -106,7 +109,10 @@ class _AppDrawerState extends State<AppDrawer> {
                         size: 20,
                       ),
                       trailing: IconButton(
-                        icon: const Icon(Icons.delete_outline_rounded),
+                        icon: const Icon(
+                          AppIcons.deleteIcon,
+                          size: 20,
+                        ),
                         onPressed: () {
                           Utils.showConfirmationDialog(
                               context,
@@ -116,7 +122,6 @@ class _AppDrawerState extends State<AppDrawer> {
                             final response = await chatsDatabase
                                 ?.removeSingleChat(chat.chatId);
                             if (!context.mounted) return;
-
                             ScaffoldMessenger.of(context).showSnackBar(
                                 SnackBar(content: Text(response.toString())));
                             context.read<ChatProvider>().fetchChats(widget.uid);

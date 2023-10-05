@@ -47,7 +47,6 @@ dependencies:
   http: ^1.1.0
   logger: ^2.0.2+1
   modal_progress_hud_nsn: ^0.4.0
-  pay: ^1.1.2
   provider: ^6.0.5
   shared_preferences: ^2.2.1
 
