@@ -37,6 +37,7 @@ class MyApp extends StatelessWidget {
         routes: {
           '/signup': (context) => const AuthSignUP(),
           '/login': (context) => const AuthLogin(),
+          '/chat': (context) => const ChatPage(),
         },
       ),
     );
