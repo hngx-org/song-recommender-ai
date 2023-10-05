@@ -305,6 +305,10 @@ packages:
     dependency: "direct main"
     description:
       name: hng_authentication
+      sha256: "111b17bae6fca6069014c6e883f408c2632a46919ce43ae1d72911cf6189c88c"
+      url: "https://pub.dev"
+    source: hosted
+    version: "0.0.3"
       sha256: "13c3187965b20891c9e9f062ba3f2d5c657f043b17743df54ed2ce0670f635aa"
       url: "https://pub.dev"
     source: hosted
@@ -325,6 +329,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "4.0.2"
+  in_app_payment:
+    dependency: "direct main"
+    description:
+      name: in_app_payment
+      sha256: "4b44f782910dca3fb5f9506529f5b081b098973e2a0a816cf7e238737dd5cd15"
+      url: "https://pub.dev"
+    source: hosted
+    version: "0.0.1"
   intl:
     dependency: transitive
     description:
@@ -478,6 +490,7 @@ packages:
     source: hosted
     version: "2.2.1"
   pay:
+    dependency: transitive
     dependency: "direct main"
     description:
       name: pay

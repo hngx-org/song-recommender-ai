@@ -1,24 +1,25 @@
 import 'package:flutter/material.dart';
 
-class CustomCheckboxListTile extends StatelessWidget {
-  const CustomCheckboxListTile(
-      {super.key, required this.title, required this.icon});
-  //
-  final Widget icon;
-  final Widget title;
+class PaymentListTile extends StatelessWidget {
+  const PaymentListTile({
+    super.key,
+    required this.title,
+  });
+
+  final String title;
 
   @override
   Widget build(BuildContext context) {
-    return CheckboxListTile(
-      value: false,
-      onChanged: (value) {},
-      shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(20),
-          side: const BorderSide(color: Colors.black)),
-      checkboxShape:
-          RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
-      title: title,
-      secondary: icon,
+    return ListTile(
+      leading: const Icon(
+        Icons.check_circle_outline_outlined,
+        color: Colors.black,
+        size: 20.0,
+      ),
+      title: Text(title),
+      contentPadding: const EdgeInsets.symmetric(horizontal: 0.0),
+      visualDensity: const VisualDensity(vertical: -4.0),
+      minLeadingWidth: 10.0,
     );
   }
 }
