@@ -73,7 +73,6 @@ class OAIRepository extends IOPENAIRepository {
       }
 
       if (aiResponse.startsWith('Error:')) {
-        aiResponse = aiResponse.substring(6);
         debugPrint('aiResponse: $aiResponse');
         if (!context.mounted) return '';
         showSnackbar(context, const Color(0xff121F33), aiResponse.substring(6));

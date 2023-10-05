@@ -13,6 +13,7 @@ import 'package:song_recommender_ai/features/inapp_payment/views/payment_page.da
 import 'package:song_recommender_ai/features/onboarding/views/onboard_screen.dart';
 import 'package:song_recommender_ai/features/sidebar/viewmodels/sidebar.viewmodel.dart';
 import 'package:song_recommender_ai/utils/res/colors.dart';
+import 'package:song_recommender_ai/utils/widgets/faq_page.dart';
 import 'package:song_recommender_ai/utils/widgets/splash_screen.dart';
 
 Future<void> main() async {
@@ -59,7 +60,7 @@ class MyApp extends StatelessWidget {
           '/login': (context) => const AuthLogin(),
           '/chat': (context) => const ChatPage(),
           '/payment': (context) => PaymentView(),
-          '/faq': (context) => const Text('FAQ')
+          '/faq': (context) => const FAQPage()
         },
       ),
     );
