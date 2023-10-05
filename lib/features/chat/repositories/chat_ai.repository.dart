@@ -1,9 +1,12 @@
+import 'dart:developer';
+
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:hng_authentication/widgets/widget.dart';
 import 'package:hngx_openai/repository/openai_repository.dart';
 import 'package:http/http.dart' as http;
 import 'package:provider/provider.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:song_recommender_ai/features/chat/models/user_message.model.dart';
 import 'package:song_recommender_ai/features/chat/services/chats_database.dart';
 import 'package:song_recommender_ai/features/chat/viewmodels/chat_ai.viewmodel.dart';
@@ -16,27 +19,31 @@ abstract class IOPENAIRepository {
 
 class OAIRepository extends IOPENAIRepository {
   static var client = http.Client();
-
-  ChatsDatabase chatsDatabase = ChatsDatabase(uid: '112sss');
   @override
   Future<String> sendMessage(
       Message message, BuildContext context, String chatId) async {
+    SharedPreferences sp = await SharedPreferences.getInstance();
+    ChatsDatabase chatsDatabase = ChatsDatabase(uid: sp.getString('userId'));
+
+    chatsDatabase.saveChat(message.prompt.toString(), chatId,
+        message.prompt.toString(), 'user', false);
+    if (!context.mounted) return '';
     context.read<ChatModel>().setLoading(true);
     context.read<ChatModel>().setScroll(true);
 
     try {
       List<String> messageList = [];
       final userPrompt =
-          '''I want you to act as a DJ. You will create a playlist of 10 songs similar to the following text either it is a song/keyword/lyrics/a short prose.
-          You must add the title, description and songs with artist names to the answer. No song or artist should be
-            repeated and do not add any anything apart from playlist, descriptions and title : "${message.prompt}"''';
+          '''I want you to act as a DJ. You will create a playlist of 10 songs similar to the following text either it is a song/keyword/lyrics/artist/a short prose.
+          You must add the short title, one liner playlist description and songs with artist names to the answer. No song should be
+            repeated and do not add any anything apart from one liner playlist description, title and songs : "${message.prompt}"''';
 
       // var headers = {
       //   'Authorization': 'Bearer ${Url.oaiToken}',
       //   'Content-Type': 'application/json'
       // };
-
-      const cookie =
+      log('User Cookies: ${sp.getString('cookie')}');
+      final cookie = sp.getString('cookie') ??
           'session=8b611d1b-d438-4755-90e8-d3ff0610baa1.AL8Tvg99Y7hbKMnHkiYKqA8-kso';
 
       // final messageSystem = MessageModel(
@@ -46,9 +53,6 @@ class OAIRepository extends IOPENAIRepository {
 
       // final messageUser = messageSystem.copyWith(role: 'user', content: userPrompt);
       messageList.add(userPrompt);
-
-      chatsDatabase.saveChat(message.prompt.toString(), chatId,
-          message.prompt.toString(), 'user', false);
 
       // var request =
       //     http.Request('POST', Uri.parse('${Url.endpoint}completions'));
@@ -69,10 +73,12 @@ class OAIRepository extends IOPENAIRepository {
       }
 
       if (aiResponse.startsWith('Error:')) {
+        aiResponse = aiResponse.substring(6);
         debugPrint('aiResponse: $aiResponse');
         if (!context.mounted) return '';
         showSnackbar(context, const Color(0xff121F33), aiResponse.substring(6));
       } else if (aiResponse.startsWith('Message:')) {
+        aiResponse = aiResponse.substring(8);
         chatsDatabase.saveChat(
             message.prompt.toString(), chatId, aiResponse, 'assist', true);
 
@@ -88,7 +94,7 @@ class OAIRepository extends IOPENAIRepository {
       //   'max_tokens': 600
       // });
       if (!context.mounted) return '';
-      context.read<MessageViewModel>().fetchMessages(chatId, '112sss');
+      context.read<MessageViewModel>().fetchMessages(chatId);
 /*       request.headers.addAll(headers);
 
       http.StreamedResponse response = await request.send();
@@ -108,15 +114,17 @@ class OAIRepository extends IOPENAIRepository {
             messageUser.copyWith(role: 'assistant', content: msgResponse);
  */
 
-      context.read<MessageViewModel>().fetchMessages(chatId, '112sss');
+      context.read<MessageViewModel>().fetchMessages(chatId);
       context.read<ChatModel>().setScroll(true);
 
       return aiResponse;
     } catch (e) {
       return 'Some error: $e';
     } finally {
-      context.read<ChatModel>().setLoading(false);
-      context.read<ChatModel>().setScroll(true);
+      if (context.mounted) {
+        context.read<ChatModel>().setLoading(false);
+        context.read<ChatModel>().setScroll(true);
+      }
     }
   }
 }

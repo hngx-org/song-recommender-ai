@@ -39,7 +39,7 @@ class Utils {
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
           Text(
-            'Music AI',
+            'SongScript AI',
             style: TextStyle(
               fontSize: 24,
               fontWeight: FontWeight.w300,

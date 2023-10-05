@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:song_recommender_ai/features/chat/models/user_message.model.dart';
 import 'package:song_recommender_ai/features/chat/repositories/messages.repository.dart';
 
@@ -6,9 +7,20 @@ class MessageViewModel with ChangeNotifier {
   IMessagesRepository messagesRepository = MessagesRepository();
   List<Message>? _messages;
   List<Message>? get getmessages => _messages;
+  bool _isProgress = true;
+  bool get isProgress => _isProgress;
+  String _uid = '';
+  String get uid => _uid;
 
-  Future<void> fetchMessages(String chatId, String uid) async {
-    _messages = await messagesRepository.fetchChatMsgs(uid, chatId);
+  Future<void> fetchMessages(String chatId) async {
+    SharedPreferences sp = await SharedPreferences.getInstance();
+    _uid = sp.getString('userId').toString();
+    _messages = await messagesRepository.fetchChatMsgs(
+        sp.getString('userId') ?? '111ss', chatId);
+    Future.delayed(const Duration(milliseconds: 500), () {
+      _isProgress = false;
+      notifyListeners();
+    });
     notifyListeners();
   }
 }

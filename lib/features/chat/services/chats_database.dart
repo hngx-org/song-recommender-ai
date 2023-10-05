@@ -22,7 +22,7 @@ class ChatsDatabase {
     });
   }
 
-  Future<void> removeAllChats() async {
+  Future<String> removeAllChats() async {
     try {
       final QuerySnapshot chatDocuments =
           await userCollection.doc(uid).collection('chats').get();
@@ -38,14 +38,43 @@ class ChatsDatabase {
         });
         await chatDocument.reference.delete();
       }
-
       if (kDebugMode) {
         print('All chats removed successfully.');
       }
+      return 'All chats removed successfully.';
     } catch (e) {
       if (kDebugMode) {
         print('Error removing chats: $e');
       }
+      return 'Error removing chat: $e';
+    }
+  }
+
+  Future<String> removeSingleChat(String chatId) async {
+    try {
+      final DocumentReference chatRef =
+          userCollection.doc(uid).collection('chats').doc(chatId);
+
+      // Delete all messages within the chat
+      final QuerySnapshot messageDocuments =
+          await chatRef.collection('messages').get();
+      for (QueryDocumentSnapshot messageDocument in messageDocuments.docs) {
+        await messageDocument.reference.delete();
+      }
+
+      /// Delete the chat itself
+      await chatRef.delete();
+
+      if (kDebugMode) {
+        print('Chat removed successfully.');
+      }
+
+      return 'Chat removed successfully.';
+    } catch (e) {
+      if (kDebugMode) {
+        print('Error removing chat: $e');
+      }
+      return 'Error removing chat: $e';
     }
   }
 }

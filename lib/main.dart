@@ -2,12 +2,17 @@ import 'package:device_preview/device_preview.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:song_recommender_ai/features/authentication/viewmodels/auth.viewmodel.dart';
+import 'package:song_recommender_ai/features/authentication/views/login_page.dart';
+import 'package:song_recommender_ai/features/authentication/views/sign_up.dart';
 import 'package:song_recommender_ai/features/chat/viewmodels/chat_ai.viewmodel.dart';
 import 'package:song_recommender_ai/features/chat/viewmodels/messages.viewmodel.dart';
 import 'package:song_recommender_ai/features/chat/views/chat_page.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'package:song_recommender_ai/features/onboarding/views/onboard_screen.dart';
 import 'package:song_recommender_ai/features/sidebar/viewmodels/sidebar.viewmodel.dart';
 import 'package:song_recommender_ai/utils/res/colors.dart';
+import 'package:song_recommender_ai/utils/widgets/splash_screen.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -34,18 +39,28 @@ class MyApp extends StatelessWidget {
       providers: [
         ChangeNotifierProvider(create: (_) => ChatModel()),
         ChangeNotifierProvider(create: (_) => ChatProvider()),
-        ChangeNotifierProvider(create: (_) => MessageViewModel())
+        ChangeNotifierProvider(create: (_) => MessageViewModel()),
+        ChangeNotifierProvider(create: (_) => AuthViewModel())
       ],
       child: MaterialApp(
         locale: DevicePreview.locale(context),
-        useInheritedMediaQuery: true,
         builder: DevicePreview.appBuilder,
         debugShowCheckedModeBanner: false,
         theme: ThemeData(
           colorScheme: ColorScheme.fromSeed(seedColor: AppColors.seedColor),
           useMaterial3: true,
         ),
-        home: const SafeArea(bottom: true, top: false, child: ChatPage()),
+        // home: const SafeArea(bottom: true, top: false, child: ChatPage()),
+        initialRoute: '/splash',
+        routes: {
+          '/onboarding': (context) => const OnboardingView(),
+          '/splash': (context) => const SplashScreen(),
+          '/signup': (context) => const AuthSignUP(),
+          '/login': (context) => const AuthLogin(),
+          '/chat': (context) => const ChatPage(),
+          '/payment': (context) => const Text('payment'),
+          '/faq': (context) => const Text('FAQ')
+        },
       ),
     );
   }

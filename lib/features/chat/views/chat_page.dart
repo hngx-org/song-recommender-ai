@@ -15,7 +15,8 @@ import 'package:song_recommender_ai/utils/res/utils.dart';
 
 class ChatPage extends StatefulWidget {
   final String chatid;
-  const ChatPage({super.key, this.chatid = '1'});
+  final String? uid;
+  const ChatPage({super.key, this.chatid = '11ssaa', this.uid});
 
   @override
   State<ChatPage> createState() => _ChatPageState();
@@ -29,16 +30,16 @@ class _ChatPageState extends State<ChatPage> {
   final chatFocus = FocusNode();
   ScrollController scrollController = ScrollController();
   Future<List<Message>?>? messages;
-
-  final uid = '112sss';
   bool showProgressIndicator = true;
+
+  Random randomNum = Random();
 
   ///We are fetching messages in the initState method from the firestore.
   @override
   void initState() {
     super.initState();
     final messagesVM = Provider.of<MessageViewModel>(context, listen: false);
-    messagesVM.fetchMessages(widget.chatid, uid);
+    messagesVM.fetchMessages(widget.chatid);
   }
 
   @override
@@ -64,10 +65,10 @@ class _ChatPageState extends State<ChatPage> {
       }
     });
 
-    Future.delayed(const Duration(seconds: 2), () {
-      setState(() {});
-      showProgressIndicator = false;
-    });
+    // Future.delayed(const Duration(seconds: 2), () {
+    //   setState(() {});
+    //   showProgressIndicator = false;
+    // });
 
     ///Sidebar and appbar widgets are handled in the separate widget and called here.
     return Scaffold(
@@ -83,8 +84,8 @@ class _ChatPageState extends State<ChatPage> {
           tooltip: MaterialLocalizations.of(context).openAppDrawerTooltip,
         );
       }), () {}),
-      drawer: const AppDrawer(
-        uid: '112sss',
+      drawer: AppDrawer(
+        uid: context.read<MessageViewModel>().uid,
       ),
 
       ///Consumer function from the provider package to load the messages list.
@@ -93,33 +94,89 @@ class _ChatPageState extends State<ChatPage> {
           //chat
           Consumer<MessageViewModel>(builder: (context, value, child) {
             if (value.getmessages == null || value.getmessages!.isEmpty) {
-              return showProgressIndicator
+              return value.isProgress
                   ? const Center(
                       child: CircularProgressIndicator(),
                     )
-                  : const Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        SizedBox(
-                          height: 10,
-                        ),
-                        FilterButtonDart(
-                            content: 'Get the playlist of your favorite artist',
-                            leadingIcon: Icons.library_music),
-                        SizedBox(
-                          height: 10,
-                        ),
-                        FilterButtonDart(
-                            content:
-                                'Get the playlist related to your favorite songs',
-                            leadingIcon: Icons.music_note),
-                        SizedBox(
-                          height: 10,
-                        ),
-                        FilterButtonDart(
-                            content: 'Get the playlist based on your mood',
-                            leadingIcon: Icons.mood_outlined)
-                      ],
+                  : Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 12.0),
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          const SizedBox(
+                            height: 10,
+                          ),
+                          FilterButtonDart(
+                              onTap: () async {
+                                if (!context.mounted) return;
+                                final msg = Message(
+                                    isSender: true,
+                                    prompt: 'Fly me to the moon!',
+                                    shouldAnimate: false);
+                                await context
+                                    .read<ChatModel>()
+                                    .sendPrompt(msg, context, widget.chatid);
+                                chatFocus.unfocus();
+                                if (scrollController.hasClients) {
+                                  scrollController.animateTo(
+                                      scrollController.position.maxScrollExtent,
+                                      duration:
+                                          const Duration(milliseconds: 10),
+                                      curve: Curves.fastLinearToSlowEaseIn);
+                                }
+                              },
+                              content: 'Fly me to the moon!',
+                              leadingIcon: Icons.library_music),
+                          const SizedBox(
+                            height: 10,
+                          ),
+                          FilterButtonDart(
+                              onTap: () async {
+                                if (!context.mounted) return;
+                                final msg = Message(
+                                    isSender: true,
+                                    prompt: 'Al-Green',
+                                    shouldAnimate: false);
+                                await context
+                                    .read<ChatModel>()
+                                    .sendPrompt(msg, context, widget.chatid);
+                                chatFocus.unfocus();
+                                if (scrollController.hasClients) {
+                                  scrollController.animateTo(
+                                      scrollController.position.maxScrollExtent,
+                                      duration:
+                                          const Duration(milliseconds: 10),
+                                      curve: Curves.fastLinearToSlowEaseIn);
+                                }
+                              },
+                              content: 'Al-Green',
+                              leadingIcon: Icons.music_note),
+                          const SizedBox(
+                            height: 10,
+                          ),
+                          FilterButtonDart(
+                              onTap: () async {
+                                if (!context.mounted) return;
+                                final msg = Message(
+                                    isSender: true,
+                                    prompt: 'Melancholic',
+                                    shouldAnimate: false);
+                                await context
+                                    .read<ChatModel>()
+                                    .sendPrompt(msg, context, widget.chatid);
+                                chatFocus.unfocus();
+                                if (scrollController.hasClients) {
+                                  scrollController.animateTo(
+                                      scrollController.position.maxScrollExtent,
+                                      duration:
+                                          const Duration(milliseconds: 10),
+                                      curve: Curves.fastLinearToSlowEaseIn);
+                                }
+                              },
+                              content: 'Melancholic',
+                              leadingIcon: Icons.mood_outlined)
+                        ],
+                      ),
                     );
             } else {
               return Container(

@@ -27,6 +27,7 @@ class OnboardingContent extends StatelessWidget {
         ),
         Text(
           title,
+          textAlign: TextAlign.center,
           style: const TextStyle(
               color: Colors.black, fontWeight: FontWeight.w500, fontSize: 30.0),
         ),
@@ -34,6 +35,7 @@ class OnboardingContent extends StatelessWidget {
           height: height * 0.03,
         ),
         Text(description,
+            textAlign: TextAlign.center,
             style: const TextStyle(
               fontWeight: FontWeight.w300,
               fontSize: 16.0,

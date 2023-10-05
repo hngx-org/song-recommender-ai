@@ -50,20 +50,20 @@ class _OnboardingViewState extends State<OnboardingView> {
             padding: const EdgeInsets.only(bottom: 30.0),
             child: Row(
               children: [
-                TextButton(
-                    onPressed: () {
-                      // Navigator.push(context,
-                      //     MaterialPageRoute(builder: (context) {
-                      //   return PaymentView();
-                      // }));
-                    },
-                    child: const Text(
-                      'Skip',
-                      style: TextStyle(
-                          color: Colors.grey,
-                          fontSize: 18.0,
-                          fontWeight: FontWeight.w400),
-                    )),
+                Visibility(
+                  visible: (_pageIndex < 2),
+                  child: TextButton(
+                      onPressed: () {
+                        Navigator.pushReplacementNamed(context, '/login');
+                      },
+                      child: const Text(
+                        'Skip',
+                        style: TextStyle(
+                            color: Colors.grey,
+                            fontSize: 18.0,
+                            fontWeight: FontWeight.w400),
+                      )),
+                ),
                 const Expanded(child: SizedBox()),
                 ...List.generate(
                     onboardingContent.length,
@@ -78,9 +78,13 @@ class _OnboardingViewState extends State<OnboardingView> {
                 const Expanded(child: SizedBox()),
                 TextButton(
                     onPressed: () {
-                      _pageController.nextPage(
-                          duration: const Duration(milliseconds: 200),
-                          curve: Curves.ease);
+                      if (_pageIndex == 2) {
+                        Navigator.pushReplacementNamed(context, '/login');
+                      } else {
+                        _pageController.nextPage(
+                            duration: const Duration(milliseconds: 200),
+                            curve: Curves.ease);
+                      }
                     },
                     child: const Text(
                       'Next',

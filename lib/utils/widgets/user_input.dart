@@ -52,9 +52,34 @@ class UserInput extends StatelessWidget {
             focusColor: Colors.white,
             filled: true,
             fillColor: Colors.white,
-            suffixIcon: const Icon(
-              Icons.send,
-              color: Color(0xffc4c4c4),
+            suffixIcon: IconButton(
+              onPressed: () async {
+                final msg = Message(
+                    isSender: true,
+                    prompt: chatcontroller.text.trim().toString(),
+                    shouldAnimate: false);
+                if (chatcontroller.text.isEmpty) {
+                  ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+                      content: Text('Please enter some message.')));
+                } else {
+                  if (!context.mounted) return;
+                  await context
+                      .read<ChatModel>()
+                      .sendPrompt(msg, context, chatId);
+                  chatFocus.unfocus();
+                  chatcontroller.clear();
+                  if (scrollController.hasClients) {
+                    scrollController.animateTo(
+                        scrollController.position.maxScrollExtent,
+                        duration: const Duration(milliseconds: 10),
+                        curve: Curves.fastLinearToSlowEaseIn);
+                  }
+                }
+              },
+              icon: const Icon(
+                Icons.send,
+                color: Color(0xffc4c4c4),
+              ),
             ),
             enabledBorder: OutlineInputBorder(
               borderSide: BorderSide(color: Colors.grey.shade300),
