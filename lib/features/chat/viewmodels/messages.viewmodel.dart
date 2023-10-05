@@ -9,12 +9,17 @@ class MessageViewModel with ChangeNotifier {
   List<Message>? get getmessages => _messages;
   bool _isProgress = true;
   bool get isProgress => _isProgress;
+
   String _uid = '';
   String get uid => _uid;
+
+  String _userCredit = '';
+  String get userCredit => _userCredit;
 
   Future<void> fetchMessages(String chatId) async {
     SharedPreferences sp = await SharedPreferences.getInstance();
     _uid = sp.getString('userId').toString();
+    _userCredit = sp.getString('userCredits').toString();
     _messages = await messagesRepository.fetchChatMsgs(
         sp.getString('userId') ?? '111ss', chatId);
     Future.delayed(const Duration(milliseconds: 500), () {

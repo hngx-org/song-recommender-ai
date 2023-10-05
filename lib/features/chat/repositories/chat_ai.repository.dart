@@ -1,4 +1,5 @@
 import 'dart:developer';
+import 'dart:io';
 
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
@@ -11,6 +12,7 @@ import 'package:song_recommender_ai/features/chat/models/user_message.model.dart
 import 'package:song_recommender_ai/features/chat/services/chats_database.dart';
 import 'package:song_recommender_ai/features/chat/viewmodels/chat_ai.viewmodel.dart';
 import 'package:song_recommender_ai/features/chat/viewmodels/messages.viewmodel.dart';
+import 'package:song_recommender_ai/utils/res/colors.dart';
 
 abstract class IOPENAIRepository {
   Future<String> sendMessage(
@@ -117,6 +119,11 @@ class OAIRepository extends IOPENAIRepository {
       context.read<ChatModel>().setScroll(true);
 
       return aiResponse;
+    } on SocketException {
+      ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+          backgroundColor: AppColors.userWidgetColor,
+          content: Text('Please check your internet connection.')));
+      return '';
     } catch (e) {
       return 'Some error: $e';
     } finally {

@@ -8,6 +8,7 @@ import 'package:song_recommender_ai/features/chat/viewmodels/chat_ai.viewmodel.d
 import 'package:song_recommender_ai/features/chat/viewmodels/messages.viewmodel.dart';
 import 'package:song_recommender_ai/utils/widgets/ai.widget.dart';
 import 'package:song_recommender_ai/utils/widgets/filter_button.dart.dart';
+import 'package:song_recommender_ai/utils/widgets/subscription_warning_widget.dart';
 import 'package:song_recommender_ai/utils/widgets/user.widget.dart';
 import 'package:song_recommender_ai/utils/widgets/user_input.dart';
 import 'package:song_recommender_ai/features/sidebar/views/sidebar.dart';
@@ -52,23 +53,12 @@ class _ChatPageState extends State<ChatPage> {
   @override
   Widget build(BuildContext context) {
     final chat = Provider.of<ChatModel>(context);
-    // if (chat.isScroll) {
-    //   WidgetsBinding.instance.addPostFrameCallback((_) {
-    //     scrollToBottom();
-    //     context.read<ChatModel>().setScroll(false);
-    //   });
-    // }
     SchedulerBinding.instance.addPostFrameCallback((_) {
       if (scrollController.hasClients) {
         scrollController.animateTo(scrollController.position.maxScrollExtent,
             duration: const Duration(milliseconds: 500), curve: Curves.easeOut);
       }
     });
-
-    // Future.delayed(const Duration(seconds: 2), () {
-    //   setState(() {});
-    //   showProgressIndicator = false;
-    // });
 
     ///Sidebar and appbar widgets are handled in the separate widget and called here.
     return Scaffold(
@@ -93,6 +83,13 @@ class _ChatPageState extends State<ChatPage> {
         children: [
           //chat
           Consumer<MessageViewModel>(builder: (context, value, child) {
+            if (value.userCredit == '0') {
+              debugPrint('userCredit: ${value.userCredit}');
+              const Padding(
+                padding: EdgeInsets.symmetric(horizontal: 20.0),
+                child: SubscribeWarning(),
+              );
+            }
             if (value.getmessages == null || value.getmessages!.isEmpty) {
               return value.isProgress
                   ? const Center(

@@ -20,6 +20,7 @@
         "spinkit",
         "unfocus",
         "viewmodel",
-        "viewmodels"
+        "viewmodels",
+        "vsync"
     ]
 }

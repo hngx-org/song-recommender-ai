@@ -4,6 +4,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:modal_progress_hud_nsn/modal_progress_hud_nsn.dart';
 import 'package:provider/provider.dart';
 import 'package:song_recommender_ai/features/authentication/viewmodels/auth.viewmodel.dart';
+import 'package:song_recommender_ai/utils/res/colors.dart';
 import 'package:song_recommender_ai/utils/widgets/auth_button.dart';
 import 'package:hng_authentication/authentication.dart';
 import 'package:hng_authentication/widgets/widget.dart';
@@ -305,7 +306,8 @@ class _AuthSignUPState extends State<AuthSignUP> {
                         if (!context.mounted) return;
                         Provider.of<AuthViewModel>(context, listen: false)
                             .setLoading(false);
-                        showSnackbar(context, Colors.red, 'SignUp ERROR');
+                        showSnackbar(
+                            context, AppColors.userWidgetColor, 'SignUp ERROR');
                       }
                     } catch (e) {
                       Provider.of<AuthViewModel>(context, listen: false)
@@ -314,7 +316,7 @@ class _AuthSignUPState extends State<AuthSignUP> {
                       if (kDebugMode) {
                         print('Error signing up: $e');
                       }
-                      showSnackbar(context, Colors.red,
+                      showSnackbar(context, AppColors.userWidgetColor,
                           'An error occurred while signing up');
                     }
                   },

@@ -36,7 +36,7 @@ class _SplashScreenState extends State<SplashScreen>
       parent: _controller,
       curve: Curves.easeInOut,
     ));
-    Future.delayed(const Duration(seconds: 3), () async {
+    Future.delayed(const Duration(seconds: 5), () async {
       SharedPreferences sp = await SharedPreferences.getInstance();
       final userId = sp.getString('userId');
       if (!context.mounted) return;
@@ -83,9 +83,7 @@ class _SplashScreenState extends State<SplashScreen>
               builder: (context, child) {
                 return Transform.translate(
                   offset: Offset(
-                    MediaQuery.of(context).size.width *
-                        _animationX.value *
-                        0.5,
+                    MediaQuery.of(context).size.width * _animationX.value * 0.5,
                     MediaQuery.of(context).size.height *
                         _animationY.value *
                         0.5,
