@@ -2,7 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:song_recommender_ai/utils/widgets/auth_button.dart';
 import 'package:hng_authentication/authentication.dart';
+import 'package:hng_authentication/src/models/user.dart';
 import 'package:hng_authentication/widgets/widget.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+import 'package:logger/logger.dart';
+
+// import 'dart:async';
 import 'dart:convert';
 
 class AuthLogin extends StatefulWidget {
@@ -18,11 +23,16 @@ class _AuthLoginState extends State<AuthLogin> {
   final TextEditingController emailController = TextEditingController();
   late Authentication authRepository;
 
+  final logger = Logger();
+  
+
   @override
   void initState() {
     super.initState();
     authRepository = Authentication(); // Initialize authRepository in initState
   }
+
+  // Function to save user details in SharedPreferences
 
   @override
   Widget build(BuildContext context) {
@@ -225,24 +235,36 @@ class _AuthLoginState extends State<AuthLogin> {
                 onPressed: () async {
                   final email = emailController.text;
                   final password = passwordController.text;
-
-                  // Call the signIn method from the Authentication class
+                  final authRepository = Authentication();
                   try {
-                    final result = await authRepository.signIn(email, password);
-                    if (result != null) {
-                      final data = json.decode(result.body);
+                    final user = await authRepository.signIn(email, password);
+                    if (user != null) {
                       showSnackbar(context, Colors.black, 'Login successful');
-                      print('sign in result: >>> $data');
-                      // Handle successful login, e.g., navigate to the home screen
+                      logger.d(
+                          'login result: >>> ${user.id}, ${user.name}, ${user.email}, ${user.cookie}, ${user.credits}');
+
+                      final prefs = await SharedPreferences.getInstance();
+                      // Save user details in SharedPreferences after successful login
+                      await prefs.setString('userEmail', user.email!.toString());
+                      await prefs.setString('userName', user.name!.toString());
+                      await prefs.setString('userCookies', user.cookie!.toString());
+                      await prefs.setString('userCredits', user.credits!.toString());
+                      // Log user details to console
+                      logger.d('Saved user details:');
+                      logger.d('User Name: ${prefs.getString('userName')}');
+                      logger.d('User Email: ${prefs.getString('userEmail')}');
+                      logger
+                          .d('User Cookies: ${prefs.getString('userCookies')}');
+                      logger.d('User Credits: ${prefs.getString('userCredits')}');
+                      // Navigate to success page here
                     } else {
-                      print('error:   eeeeeee');
                       showSnackbar(context, Colors.red, 'Login ERROR');
                     }
                   } catch (e) {
                     // Handle exceptions or errors here
-                    print('Error signing in: $e');
+                    print('Error logging in: $e');
                     showSnackbar(context, Colors.red,
-                        'An error occurred while signing in');
+                        'An error occurred while logging in');
                   }
                 },
                 child: const Text(
