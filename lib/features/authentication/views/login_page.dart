@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:song_recommender_ai/utils/widgets/auth_button.dart';
@@ -262,7 +263,10 @@ class _AuthLoginState extends State<AuthLogin> {
                     }
                   } catch (e) {
                     // Handle exceptions or errors here
-                    print('Error logging in: $e');
+                    if (kDebugMode) {
+                      print('Error signing in: $e');
+                    }
+                    if (!context.mounted) return;
                     showSnackbar(context, Colors.red,
                         'An error occurred while logging in');
                   }

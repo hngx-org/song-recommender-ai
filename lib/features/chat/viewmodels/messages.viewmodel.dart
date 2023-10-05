@@ -4,11 +4,11 @@ import 'package:song_recommender_ai/features/chat/repositories/messages.reposito
 
 class MessageViewModel with ChangeNotifier {
   IMessagesRepository messagesRepository = MessagesRepository();
-  List<Message>? messages = [];
-  List<Message>? get getmessages => messages;
+  List<Message>? _messages;
+  List<Message>? get getmessages => _messages;
 
   Future<void> fetchMessages(String chatId, String uid) async {
-    messages = await messagesRepository.fetchChatMsgs(uid, chatId);
+    _messages = await messagesRepository.fetchChatMsgs(uid, chatId);
     notifyListeners();
   }
 }

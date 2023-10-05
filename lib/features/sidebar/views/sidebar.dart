@@ -39,29 +39,48 @@ class _AppDrawerState extends State<AppDrawer> {
               const SizedBox(
                 height: 10,
               ),
-              Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: ListTile(
-                  style: ListTileStyle.drawer,
-                  leading: const Icon(
-                    Icons.add,
-                    size: 25,
+              Row(
+                children: [
+                  const SizedBox(
+                    width: 10,
                   ),
-                  shape: RoundedRectangleBorder(
-                      side: const BorderSide(color: Colors.black),
-                      borderRadius: BorderRadius.circular(15)),
-                  title: const Text('Start new chat'),
-                  onTap: () {
-                    Random num = Random(256);
-                    chatId = num.toString();
-                    Navigator.pushReplacement(
-                      context,
-                      MaterialPageRoute(
-                        builder: (_) => ChatPage(chatid: chatId),
+                  SizedBox(
+                    width: 230,
+                    child: ListTile(
+                      style: ListTileStyle.drawer,
+                      leading: const Icon(
+                        Icons.add,
+                        size: 25,
                       ),
-                    );
-                  },
-                ),
+                      shape: RoundedRectangleBorder(
+                          side: const BorderSide(color: Colors.black),
+                          borderRadius: BorderRadius.circular(15)),
+                      title: const Text('Start new chat'),
+                      onTap: () {
+                        Random num = Random();
+                        final chatId = '${num.nextInt(2354)}chat';
+                        // print(chatId);
+                        Navigator.pushReplacement(
+                          context,
+                          MaterialPageRoute(
+                            builder: (_) => ChatPage(chatid: chatId),
+                          ),
+                        );
+                      },
+                    ),
+                  ),
+                  const SizedBox(
+                    width: 10,
+                  ),
+                  IconButton(
+                      onPressed: () {
+                        Scaffold.of(context).closeDrawer();
+                      },
+                      icon: const Icon(
+                        Icons.close,
+                        size: 25,
+                      )),
+                ],
               ),
               ListView.builder(
                 shrinkWrap: true,

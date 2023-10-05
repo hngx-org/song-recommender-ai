@@ -3,7 +3,7 @@ import 'package:flutter/foundation.dart';
 import 'package:song_recommender_ai/features/chat/models/user_message.model.dart';
 
 abstract class IMessagesRepository {
-  Future<List<Message>?> fetchChatMsgs(String uId, String chatId);
+  Future<List<Message>> fetchChatMsgs(String uId, String chatId);
 }
 
 ///This Repository is used to fetch messages from the firestore fpr each chat,
@@ -18,7 +18,7 @@ class MessagesRepository extends IMessagesRepository {
   final FirebaseFirestore _firestore = FirebaseFirestore.instance;
 
   @override
-  Future<List<Message>?> fetchChatMsgs(String uId, String chatId) async {
+  Future<List<Message>> fetchChatMsgs(String uId, String chatId) async {
     try {
       final chatRef = _firestore
           .collection('users')

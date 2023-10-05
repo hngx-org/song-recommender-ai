@@ -7,11 +7,13 @@ class UserInput extends StatelessWidget {
   final TextEditingController chatcontroller;
   final FocusNode chatFocus;
   final String chatId;
+  final ScrollController scrollController;
   const UserInput({
     Key? key,
     required this.chatcontroller,
     required this.chatFocus,
     required this.chatId,
+    required this.scrollController,
   }) : super(key: key);
 
   @override
@@ -32,6 +34,10 @@ class UserInput extends StatelessWidget {
               context.read<ChatModel>().sendPrompt(msg, context, chatId);
               chatFocus.unfocus();
               chatcontroller.clear();
+              scrollController.animateTo(
+                  scrollController.position.maxScrollExtent,
+                  duration: const Duration(microseconds: 300),
+                  curve: Curves.fastLinearToSlowEaseIn);
             }
           },
           controller: chatcontroller,

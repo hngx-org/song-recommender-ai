@@ -6,10 +6,12 @@ import 'package:flutter/material.dart';
 class AiMessage extends StatelessWidget {
   final String? text;
   final bool shouldAnimate;
+  final ScrollController scrollController;
   const AiMessage({
     Key? key,
     this.text,
     required this.shouldAnimate,
+    required this.scrollController,
   }) : super(key: key);
 
   @override
@@ -62,6 +64,12 @@ class AiMessage extends StatelessWidget {
                       animatedTexts: [TypewriterAnimatedText(text.toString())],
                       // isRepeatingAnimation: false,
                       totalRepeatCount: 1,
+                      onFinished: () {
+                        scrollController.animateTo(
+                            scrollController.position.maxScrollExtent,
+                            duration: const Duration(milliseconds: 10),
+                            curve: Curves.fastEaseInToSlowEaseOut);
+                      },
                     )
                   : Text(text.toString()),
             ),
