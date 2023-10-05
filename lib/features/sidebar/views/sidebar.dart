@@ -116,6 +116,7 @@ class _AppDrawerState extends State<AppDrawer> {
                             final response = await chatsDatabase
                                 ?.removeSingleChat(chat.chatId);
                             if (!context.mounted) return;
+
                             ScaffoldMessenger.of(context).showSnackBar(
                                 SnackBar(content: Text(response.toString())));
                             context.read<ChatProvider>().fetchChats(widget.uid);

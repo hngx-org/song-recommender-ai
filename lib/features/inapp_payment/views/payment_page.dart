@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:song_recommender_ai/features/inapp_payment/viewmodels/payment.viewmodel.dart';
 import 'package:song_recommender_ai/utils/widgets/custom_buttons.dart';
 import 'dart:io';
 import 'package:in_app_payment/in_app_payment.dart';
@@ -10,12 +12,10 @@ class PaymentView extends StatelessWidget {
   });
 
   final pay = HNGPay();
-  final String os = Platform.operatingSystem;
-
-  final int amountToPay = 5;
 
   @override
   Widget build(BuildContext context) {
+    PaymentViewModel paymentViewModel = context.watch<PaymentViewModel>();
     final height = MediaQuery.of(context).size.height;
     return Scaffold(
       appBar: AppBar(
@@ -52,7 +52,7 @@ class PaymentView extends StatelessWidget {
                 ),
                 const Spacer(),
                 Text(
-                  '\$$amountToPay/mo',
+                  '\$${paymentViewModel.amountToPay}/mo',
                   style: const TextStyle(
                       fontWeight: FontWeight.w400, fontSize: 20.0),
                 )
@@ -73,12 +73,13 @@ class PaymentView extends StatelessWidget {
             SizedBox(
               height: height * 0.03,
             ),
-            SizedBox(
-              width: double.infinity,
-              child: Platform.isIOS
-                  ? pay.applePay(amountToPay: "$amountToPay")
-                  : pay.googlePay(amountToPay: "$amountToPay"),
-            )
+            Platform.isIOS
+                ? pay.applePay(context,
+                    amountToPay: "${paymentViewModel.amountToPay}",
+                    userID: "${paymentViewModel.getUserId()}")
+                : pay.googlePay(context,
+                    amountToPay: "${paymentViewModel.amountToPay}",
+                    userID: "${paymentViewModel.getUserId()}")
           ],
         ),
       ),
