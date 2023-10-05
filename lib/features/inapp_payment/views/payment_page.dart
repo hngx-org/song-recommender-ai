@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:song_recommender_ai/utils/widgets/custom_buttons.dart';
 import 'dart:io';
 import 'package:in_app_payment/in_app_payment.dart';
+import '../../../utils/widgets/custom_list_tile.dart';
 
 class PaymentView extends StatelessWidget {
   PaymentView({
@@ -75,30 +76,6 @@ class PaymentView extends StatelessWidget {
           ],
         ),
       ),
-    );
-  }
-}
-
-class PaymentListTile extends StatelessWidget {
-  const PaymentListTile({
-    super.key,
-    required this.title,
-  });
-
-  final String title;
-
-  @override
-  Widget build(BuildContext context) {
-    return ListTile(
-      leading: const Icon(
-        Icons.check_circle_outline_outlined,
-        color: Colors.black,
-        size: 20.0,
-      ),
-      title: Text(title),
-      contentPadding: const EdgeInsets.symmetric(horizontal: 0.0),
-      visualDensity: const VisualDensity(vertical: -4.0),
-      minLeadingWidth: 10.0,
     );
   }
 }
