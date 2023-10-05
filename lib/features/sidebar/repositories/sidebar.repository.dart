@@ -42,6 +42,7 @@ class SidebarRepository extends ISidebarRepository {
         onTap: () async {
           await Utils.showConfirmationDialog(context, 'Confirmation',
               'Are you sure you want to delete all chats.', 'delete', () async {
+            Provider.of<AuthViewModel>(context, listen: false).setLoading(true);
             final response = await chatsDatabase.removeAllChats();
 
             if (!context.mounted) return;
@@ -49,6 +50,8 @@ class SidebarRepository extends ISidebarRepository {
                 .showSnackBar(SnackBar(content: Text(response.toString())));
 
             context.read<ChatProvider>().fetchChats(uid);
+            Provider.of<AuthViewModel>(context, listen: false)
+                .setLoading(false);
             Navigator.pushReplacement(
                 context, MaterialPageRoute(builder: (_) => const ChatPage()));
           });

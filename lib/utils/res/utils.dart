@@ -57,13 +57,13 @@ class Utils {
         ],
       ),
       leading: leading,
-      actions: [
-        IconButton(
+      actions: const [
+        /* IconButton(
             onPressed: filter,
             icon: Icon(
               AppIcons.filterIcon,
               color: Colors.black.withOpacity(0.23),
-            ))
+            )) */
       ],
     );
   }

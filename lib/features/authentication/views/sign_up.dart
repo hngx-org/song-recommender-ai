@@ -33,6 +33,7 @@ class _AuthSignUPState extends State<AuthSignUP> {
     authRepository = Authentication(); // Initialize authRepository in initState
   }
 
+  bool privacyNpolicyValue = false;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -229,19 +230,13 @@ class _AuthSignUPState extends State<AuthSignUP> {
                 padding: const EdgeInsets.only(left: 20.0),
                 child: Row(
                   children: [
-                    Container(
-                      width: 24,
-                      height: 24,
-                      decoration: BoxDecoration(
-                        color: const Color(0xff2111ad),
-                        borderRadius: BorderRadius.circular(4),
-                      ),
-                      child: const Icon(
-                        Icons.check,
-                        color: Colors.white,
-                        size: 16,
-                      ),
-                    ),
+                    Checkbox(
+                        value: privacyNpolicyValue,
+                        onChanged: (bool? v) {
+                          setState(() {
+                            privacyNpolicyValue = v!;
+                          });
+                        }),
                     const SizedBox(width: 8),
                     Expanded(
                       child: RichText(
@@ -313,6 +308,8 @@ class _AuthSignUPState extends State<AuthSignUP> {
                         showSnackbar(context, Colors.red, 'SignUp ERROR');
                       }
                     } catch (e) {
+                      Provider.of<AuthViewModel>(context, listen: false)
+                          .setLoading(false);
                       // Handle exceptions or errors here
                       if (kDebugMode) {
                         print('Error signing up: $e');

@@ -46,30 +46,19 @@ class _AuthLoginState extends State<AuthLogin> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Column(
+              const Column(
                 children: [
-                  const SizedBox(
+                  SizedBox(
                     width: 18.669641494750977,
                     height: 17.833019256591797,
                   ),
-                  const SizedBox(
+                  SizedBox(
                     width: 18.669641494750977,
                     height: 17.833019256591797,
                   ),
-                  const SizedBox(
+                  SizedBox(
                     width: 18.669641494750977,
                     height: 17.833019256591797,
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.only(left: 25.0),
-                    child: Align(
-                      alignment: Alignment.centerLeft,
-                      child: SvgPicture.asset(
-                        'assets/images/Back.svg',
-                        width: 15,
-                        height: 15,
-                      ),
-                    ),
                   ),
                 ],
               ),
@@ -94,7 +83,7 @@ class _AuthLoginState extends State<AuthLogin> {
                       child: Row(
                         children: [
                           const Text(
-                            "Welcome back",
+                            "Welcome",
                             style: TextStyle(
                               fontSize: 20,
                               fontWeight: FontWeight.w600,
@@ -200,7 +189,7 @@ class _AuthLoginState extends State<AuthLogin> {
               const SizedBox(
                 height: 35.0,
               ),
-              Padding(
+              /* Padding(
                 padding: const EdgeInsets.only(left: 20.0),
                 child: Row(
                   children: [
@@ -233,6 +222,7 @@ class _AuthLoginState extends State<AuthLogin> {
                   ],
                 ),
               ),
+       */
               const SizedBox(
                 height: 16.0,
               ),
@@ -287,6 +277,8 @@ class _AuthLoginState extends State<AuthLogin> {
                         print('Error signing in: $e');
                       }
                       if (!context.mounted) return;
+                      Provider.of<AuthViewModel>(context, listen: false)
+                          .setLoading(false);
                       showSnackbar(context, AppColors.userWidgetColor,
                           'An error occurred while logging in');
                     }
