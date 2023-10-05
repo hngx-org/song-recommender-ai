@@ -19,7 +19,10 @@ class PaymentView extends StatelessWidget {
     final height = MediaQuery.of(context).size.height;
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Payment'),
+        title: const Text(
+          'Payment',
+          style: TextStyle(fontWeight: FontWeight.bold),
+        ),
         centerTitle: true,
         leading: CustomIconButton(
           onPressed: () {
@@ -70,9 +73,12 @@ class PaymentView extends StatelessWidget {
             SizedBox(
               height: height * 0.03,
             ),
-            Platform.isIOS
-                ? pay.applePay(amountToPay: "$amountToPay")
-                : pay.googlePay(amountToPay: "$amountToPay")
+            SizedBox(
+              width: double.infinity,
+              child: Platform.isIOS
+                  ? pay.applePay(amountToPay: "$amountToPay")
+                  : pay.googlePay(amountToPay: "$amountToPay"),
+            )
           ],
         ),
       ),
