@@ -21,7 +21,7 @@ class PaymentView extends StatelessWidget {
       appBar: AppBar(
         title: const Text(
           'Payment',
-          style: TextStyle(fontWeight: FontWeight.bold),
+          style: TextStyle(fontWeight: FontWeight.w500),
         ),
         centerTitle: true,
         leading: CustomIconButton(
