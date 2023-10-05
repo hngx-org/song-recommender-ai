@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:song_recommender_ai/utils/res/colors.dart';
 
 class UserMessage extends StatelessWidget {
   final String? text;
@@ -16,7 +17,7 @@ class UserMessage extends StatelessWidget {
               bottomLeft: Radius.circular(5),
               topRight: Radius.circular(30),
               bottomRight: Radius.circular(30)),
-          color: Color(0xff121F33)),
+          color: AppColors.userWidgetColor),
       padding: const EdgeInsets.all(8),
       margin: const EdgeInsets.only(top: 20, bottom: 10, left: 10, right: 150),
       child: Padding(

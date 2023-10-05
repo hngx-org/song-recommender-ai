@@ -2,6 +2,7 @@ import 'package:animated_text_kit/animated_text_kit.dart';
 import 'package:clipboard/clipboard.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:song_recommender_ai/utils/res/colors.dart';
 
 class AiMessage extends StatelessWidget {
   final String? text;
@@ -20,7 +21,7 @@ class AiMessage extends StatelessWidget {
       key: key,
       decoration: const BoxDecoration(
         borderRadius: BorderRadius.all(Radius.circular(24)),
-        color: Color(0xfff2f2f2),
+        color: AppColors.aiWidgetColor,
       ),
       margin: const EdgeInsets.all(30),
       padding: const EdgeInsets.all(12),

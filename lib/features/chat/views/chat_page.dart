@@ -7,6 +7,7 @@ import 'package:song_recommender_ai/features/chat/models/user_message.model.dart
 import 'package:song_recommender_ai/features/chat/viewmodels/chat_ai.viewmodel.dart';
 import 'package:song_recommender_ai/features/chat/viewmodels/messages.viewmodel.dart';
 import 'package:song_recommender_ai/utils/widgets/ai.widget.dart';
+import 'package:song_recommender_ai/utils/widgets/filter_button.dart.dart';
 import 'package:song_recommender_ai/utils/widgets/user.widget.dart';
 import 'package:song_recommender_ai/utils/widgets/user_input.dart';
 import 'package:song_recommender_ai/features/sidebar/views/sidebar.dart';
@@ -96,7 +97,30 @@ class _ChatPageState extends State<ChatPage> {
                   ? const Center(
                       child: CircularProgressIndicator(),
                     )
-                  : const Center(child: Text('No chats Started!'));
+                  : const Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        SizedBox(
+                          height: 10,
+                        ),
+                        FilterButtonDart(
+                            content: 'Get the playlist of your favorite artist',
+                            leadingIcon: Icons.library_music),
+                        SizedBox(
+                          height: 10,
+                        ),
+                        FilterButtonDart(
+                            content:
+                                'Get the playlist related to your favorite songs',
+                            leadingIcon: Icons.music_note),
+                        SizedBox(
+                          height: 10,
+                        ),
+                        FilterButtonDart(
+                            content: 'Get the playlist based on your mood',
+                            leadingIcon: Icons.mood_outlined)
+                      ],
+                    );
             } else {
               return Container(
                 margin: const EdgeInsets.only(bottom: 80),
