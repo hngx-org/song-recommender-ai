@@ -329,19 +329,19 @@ packages:
     dependency: "direct main"
     description:
       name: hng_authentication
-      sha256: "13c3187965b20891c9e9f062ba3f2d5c657f043b17743df54ed2ce0670f635aa"
+      sha256: "656541d4f18adc75e3f6c5a684e53e7c06bf332da440953705bcd137f28e475f"
       url: "https://pub.dev"
     source: hosted
-    version: "0.1.4"
+    version: "0.1.5"
   hngx_openai:
     dependency: "direct main"
     description:
       path: "."
       ref: main
-      resolved-ref: "726231df5876b765128a2c21717996e52e5b2811"
+      resolved-ref: "66b4c30b43dac290e99173cad393599e3e532147"
       url: "https://github.com/hngx-org/openai-package.git"
     source: git
-    version: "1.0.1"
+    version: "1.0.2"
   http:
     dependency: "direct main"
     description:
@@ -362,10 +362,10 @@ packages:
     dependency: "direct main"
     description:
       name: in_app_payment
-      sha256: "4b44f782910dca3fb5f9506529f5b081b098973e2a0a816cf7e238737dd5cd15"
+      sha256: "6417c498c618c5007445681fc019b32c9b5719290aa28893c79875249108752d"
       url: "https://pub.dev"
     source: hosted
-    version: "0.0.1"
+    version: "0.0.2"
   intl:
     dependency: transitive
     description:
